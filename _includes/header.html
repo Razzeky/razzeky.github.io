@@ -1,6 +1,59 @@
-<!-- Header -->
-<header id="header"{% if page.layout == 'landing' %} class="alt"{% endif %}>
-  <h1><a href="{{ site.baseurl }}/index.html">{{ site.title }}</a></h1>
-  <nav id="nav">
-  </nav>
+<header>
+    <div class="header-content">
+        <div class="header-content-inner">
+            <a href="#" target="_blank" class="portfolio-box reazzeky_img"><img class="animate" src="/img/cesar_X6.png" class="img-responsive" alt=""></a>
+        </div>
+    </div>
 </header>
+
+<style>
+.reazzeky_img{
+    padding-left: 4em;
+}
+@media (min-width: 300px) and (max-width: 600px)  {
+ .reazzeky_img{
+    padding-left: 0em;
+}
+
+a.portfolio-box.reazzeky_img img {
+    width: 18em;
+    margin-left: 2em;
+}
+}
+.sobre_razzeky{margin-top: 2em;}
+
+.header-content a {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+.header-content .animate {
+  animation-name: LogoAnimate;
+  animation-duration: .9s;
+}
+
+
+@keyframes LogoAnimate {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  82.5% {
+    transform: scale(1.03);
+    animation-timing-function: ease-out;
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+</style>

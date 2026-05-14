@@ -1,0 +1,603 @@
+/* ============================================================
+   CORES E VARIÁVEIS
+   ============================================================ */
+:root {
+    --bg-dark: #080808;      /* Fundo ultra escuro */
+    --card-bg: #111111;      /* Fundo dos cards */
+    --accent: #5c53e7;       /* Verde Spotify / SoundCloud */
+    --text-main: #ffffff;
+    --text-dim: #888888;
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 2);
+}
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Impede que elementos vazem a largura da tela */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden; /* Corta qualquer conteúdo que tente sair pela lateral */
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   BARRA DE NAVEGAÇÃO (NAVBAR)
+   ============================================================ */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 2000;
+    transition: var(--transition);
+    background: rgba(8, 8, 8, 0.95); /* Fundo sutil para legibilidade */
+}
+
+.navbar.scrolled {
+    padding: 10px 5%;
+    background: #000000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* LOGO RESPONSIVO CLICÁVEL */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    max-width: 50%; /* Evita que o logo empurre o menu em telas pequenas */
+}
+
+.logo-img {
+    height: auto;
+    max-height: 50px; /* Limite para PC */
+    width: 100%;
+    object-fit: contain;
+    transition: var(--transition);
+}
+
+.logo-link:hover .logo-img {
+    opacity: 0.8;
+    transform: scale(1.03);
+}
+
+/* LINKS DE NAVEGAÇÃO */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+
+
+
+/* Título Hero com Sublinhação */
+.hero-title {
+
+    font-size: clamp(1.5rem, 7vw, 5rem);
+    letter-spacing: clamp(5px, 2vw, 15px);
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block; /* Necessário para a linha acompanhar a largura do texto */
+    margin-bottom: 20px;
+}
+
+.hero-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px; /* Distância da linha para o texto */
+    transform: translateX(-50%);
+    width: 60%; /* Comprimento da linha em relação ao texto */
+    height: 4px; /* Espessura da linha */
+    background-color: #b3117d;
+    border-radius: 2px;
+}
+
+
+
+/* Container do Logo na Hero */
+.hero-logo-container {
+    margin: 20px auto;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Imagem do Logo Grande */
+.hero-logo-large {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px #220a1b)
+}
+
+/* Ajuste mobile para o logo não ocupar a tela toda */
+@media (max-width: 480px) {
+    .hero-logo-container {
+        max-width: 180px;
+    }
+}
+
+
+
+/* ============================================================
+   SEÇÃO BIO
+   ============================================================ */
+.bio-text p {
+   
+    text-align: justify;
+    text-justify: inter-word; 
+    
+    /* Responsividade e Leitura */
+    line-height: 1.8; 
+    color: #ffffff;
+    font-size: clamp(1rem, 2.5vw, 1.1rem); /* Fonte aumenta/diminui conforme a tela */
+    
+  
+    padding: 0 10px; 
+    
+ 
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+/* Ajuste específico para celulares */
+@media (max-width: 480px) {
+    .bio-text p {
+
+        text-align: center; 
+        line-height: 1.6;
+    }
+}
+
+
+/* ============================================================
+STREAMING & GALERIA
+   ============================================================ */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.4), var(--bg-dark)), url('sua-foto.jpg') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.streaming-section, .gallery-section {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 100px 5%;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.divider {
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 20px auto;
+}
+
+/* GRADE DOS PLAYERS */
+.players-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.player-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.platform-title {
+    color: var(--accent);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+/* GRADE DA GALERIA */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #111;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.8) grayscale(20%);
+    transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 25px rgba(34, 10, 27, 0.6);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.1) grayscale(0%);
+}
+
+/* ============================================================
+   RODAPÉ (FOOTER)
+   ============================================================ */
+footer {
+    padding: 80px 5%;
+    text-align: center;
+}
+
+.email {
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    color: var(--text-dim);
+    margin-bottom: 50px;
+    text-decoration: none;
+    display: block;
+}
+
+.footer-bottom {
+    font-size: 0.65rem;
+    color: #444;
+    letter-spacing: 2px;
+    border-top: 1px solid #1a1a1a;
+    padding-top: 30px;
+    text-transform: uppercase;
+}
+
+/* ============================================================
+   AJUSTES PARA CELULAR
+   ============================================================ */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Esconde menu de texto no mobile */
+    }
+
+    .logo-img {
+        max-height: 45px; /* Logo menor no celular */
+    }
+
+    .streaming-section, .gallery-section {
+        padding: 60px 5%;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 fotos por linha no celular */
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .players-container {
+        grid-template-columns: 1fr; /* Força players em uma única coluna */
+    }
+}
+
+
+
+
+/* ============================================================
+   SEÇÃO PRESSKIT (DRIVE)
+   ============================================================ */
+.presskit-section {
+    padding: 60px 5%;
+    background: ;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 40px;
+}
+
+.presskit-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    text-align: left;
+}
+
+.presskit-icon img {
+    width: 80px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+}
+
+.presskit-text h3 {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #9b1e76;
+    margin-bottom: 10px;
+}
+
+.presskit-text p {
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.btn-presskit {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #53103f;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.btn-presskit:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-3px);
+}
+
+/* Ajuste para Celular */
+@media (max-width: 768px) {
+    .presskit-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .presskit-icon img {
+        width: 60px;
+    }
+}
+
+
+
+
+
+
+/* --- ORGANIZAÇÃO DOS CONTATOS NO RODAPÉ --- */
+
+.social-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 40px auto;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+
+.social-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    width: 90px; 
+    transition: var(--transition);
+}
+
+
+.social-item img {
+    width: 40px; 
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 12px;
+    filter: none;     transition: var(--transition);
+}
+
+
+.social-item span {
+    font-size: 0.65rem;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    text-align: center;
+    opacity: 0.8;
+}
+
+
+.social-item:hover {
+    transform: translateY(-8px);
+}
+
+.social-item:hover img {
+   
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    transform: scale(1.1);
+}
+
+.social-item:hover span {
+    opacity: 1;
+    color: var(--accent); 
+}
+
+/* ============================================================
+   AJUSTES DE RESPONSIVIDADE (CELULAR)
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .social-grid {
+        gap: 20px;
+    }
+    
+    .social-item {
+        width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+                gap: 25px 10px;
+    }
+    
+    .social-item {
+        width: 100%;
+    }
+    
+    .social-item img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+
+
+
+
+/* Container que segura os dois cards */
+.links-externos-section {
+    display: flex;
+    flex-wrap: wrap; /* Faz pular linha no celular */
+    justify-content: center;
+    gap: 30px;
+    padding: 60px 5%;
+    background-color: #080808;
+}
+
+/* O Card (igual para Drive e Linktree) */
+.presskit-container {
+    background-color: #111; /* Fundo levemente cinza para destacar do preto */
+    padding: 40px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    max-width: 550px; /* Largura máxima para não esticar demais no PC */
+    width: 100%;
+    transition: transform 0.3s ease;
+    border: 1px solid #222;
+}
+
+.presskit-container:hover {
+    transform: translateY(-5px);
+    border-color: #b3117d; /* Brilho ao passar o mouse */
+}
+
+/* Ícone */
+.presskit-icon img {
+    width: 80px;
+    height: auto;
+}
+
+/* Texto dentro do Card */
+.presskit-text h3 {
+    color: #b3117d;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.presskit-text p {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* Botão */
+.btn-presskit {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #4a0e2e; /* Tom vinho/escuro do seu print */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: background 0.3s;
+}
+
+.btn-presskit:hover {
+    background-color: #b3117d;
+}
+
+/* Responsividade para Celular */
+@media (max-width: 600px) {
+    .presskit-container {
+        flex-direction: column; /* No celular, ícone fica em cima do texto */
+        text-align: center;
+        padding: 30px 20px;
+    }
+    
+    .presskit-icon img {
+        width: 60px;
+    }
+}
+
+.presskit-icon img {
+    width: 60px; /* Tamanho ideal para o ícone do Linktree */
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* Garante que o container do ícone centralize a imagem caso ela varie de tamanho */
+.presskit-icon {
+    min-width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

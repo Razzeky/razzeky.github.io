@@ -1,11 +1,12 @@
 /**
- * Otimização 
+ * Otimização e Inicialização Geral
  */
 document.addEventListener('DOMContentLoaded', () => {
+    
+    /* === 1. PERFORMANCE DE SCROLL === */
     const navbar = document.querySelector('.navbar');
     let isScrolling = false;
 
-    // performance de scroll
     window.addEventListener('scroll', () => {
         if (!isScrolling) {
             window.requestAnimationFrame(() => {
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // links internos 
+    /* === 2. LINKS INTERNOS === */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
@@ -33,65 +34,68 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
 
+    /* === 3. CARROSSEL DE FOTOS (CORRIGIDO) === */
+    const track = document.querySelector('.carousel-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const nextBtn = document.querySelector('.next');
+    const prevBtn = document.querySelector('.prev');
 
-/**
- * carrosel de fotos
- */
+    let currentIndex = 0;
+    let autoSlideTimer; // Variável para armazenar o controle do tempo
 
-
-const track = document.querySelector('.carousel-track');
-const slides = document.querySelectorAll('.carousel-slide');
-const nextBtn = document.querySelector('.next');
-const prevBtn = document.querySelector('.prev');
-
-let currentIndex = 0;
-
-function updateCarousel() {
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
-
-nextBtn.addEventListener('click', () => {
-    currentIndex++;
-
-    if (currentIndex >= slides.length) {
-        currentIndex = 0;
+    function updateCarousel() {
+        if (track) {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
     }
 
-    updateCarousel();
-});
-
-prevBtn.addEventListener('click', () => {
-    currentIndex--;
-
-    if (currentIndex < 0) {
-        currentIndex = slides.length - 1;
+    function nextSlide() {
+        currentIndex++;
+        if (currentIndex >= slides.length) {
+            currentIndex = 0;
+        }
+        updateCarousel();
     }
 
-    updateCarousel();
-});
-
-/* Auto slide */
-
-setInterval(() => {
-    currentIndex++;
-
-    if (currentIndex >= slides.length) {
-        currentIndex = 0;
+    function prevSlide() {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = slides.length - 1;
+        }
+        updateCarousel();
     }
 
-    updateCarousel();
-}, 5000);
+    // Função para iniciar/reiniciar o temporizador automático
+    function startAutoSlide() {
+        clearInterval(autoSlideTimer); // Limpa o timer anterior para evitar loops duplicados
+        autoSlideTimer = setInterval(nextSlide, 2000); // Passa a cada 2 segundos
+    }
 
+    // Eventos dos botões (com reset do tempo automático)
+    if (nextBtn && prevBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            startAutoSlide(); // Reinicia o contador para não pular logo em seguida
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            startAutoSlide(); // Reinicia o contador
+        });
+    }
+
+    // Inicia o carrossel automático assim que a página carrega
+    if (slides.length > 0) {
+        startAutoSlide();
+    }
+});
 
 
 /* ============================================================
    TRADUÇÃO DO SITE
    ============================================================ */
-
 const translations = {
-
     pt: {
         trajetoria: "Minha trajetória",
         musicas: "Músicas",
@@ -99,7 +103,6 @@ const translations = {
         contatos: "Contatos",
         redes: "REDES SOCIAIS E CONTATOS"
     },
-
     en: {
         trajetoria: "My Journey",
         musicas: "Songs",
@@ -107,7 +110,6 @@ const translations = {
         contatos: "Contacts",
         redes: "SOCIAL MEDIA & CONTACTS"
     },
-
     es: {
         trajetoria: "Mi Trayectoria",
         musicas: "Música",
@@ -118,73 +120,63 @@ const translations = {
 };
 
 function changeLanguage(lang) {
-
     const t = translations[lang];
+    if (!t) return;
 
-    document.querySelectorAll(".nav-links a")[0].innerText = t.trajetoria;
-    document.querySelectorAll(".nav-links a")[1].innerText = t.musicas;
-    document.querySelectorAll(".nav-links a")[2].innerText = t.galeria;
-    document.querySelectorAll(".nav-links a")[3].innerText = t.contatos;
+    const navLinks = document.querySelectorAll(".nav-links a");
+    if (navLinks.length >= 4) {
+        navLinks[0].innerText = t.trajetoria;
+        navLinks[1].innerText = t.musicas;
+        navLinks[2].innerText = t.galeria;
+        navLinks[3].innerText = t.contatos;
+    }
 
-    document.querySelector(".footer-content h2").innerText = t.redes;
+    const footerTitle = document.querySelector(".footer-content h2");
+    if (footerTitle) {
+        footerTitle.innerText = t.redes;
+    }
 }
 
 
-
-
-
+/* ============================================================
+   PARTÍCULAS (tsParticles)
+   ============================================================ */
 window.addEventListener("load", async () => {
-
-    await tsParticles.load({
-
-        id: "particles-js",
-
-        options: {
-
-            background: {
-                color: "transparent"
-            },
-
-            fpsLimit: 60,
-
-            particles: {
-
-                number: {
-                    value: 60
+    if (typeof tsParticles !== "undefined") {
+        await tsParticles.load({
+            id: "particles-js",
+            options: {
+                background: {
+                    color: "transparent"
                 },
-
-                color: {
-                    value: ["#ff00aa", "#7c3aed", "#00ffff"]
+                fpsLimit: 60,
+                particles: {
+                    number: {
+                        value: 60
+                    },
+                    color: {
+                        value: ["#ff00aa", "#7c3aed", "#00ffff"]
+                    },
+                    links: {
+                        enable: true,
+                        color: "#ff00aa",
+                        distance: 140,
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1.5
+                    },
+                    opacity: {
+                        value: 0.3
+                    },
+                    size: {
+                        value: { min: 1, max: 4 }
+                    }
                 },
-
-                links: {
-                    enable: true,
-                    color: "#ff00aa",
-                    distance: 140,
-                    opacity: 0.2,
-                    width: 1
-                },
-
-                move: {
-                    enable: true,
-                    speed: 1.5
-                },
-
-                opacity: {
-                    value: 0.3
-                },
-
-                size: {
-                    value: { min: 1, max: 4 }
-                }
-
-            },
-
-            detectRetina: true
-
-        }
-
-    });
-
+                detectRetina: true
+            }
+        });
+    }
 });
-```

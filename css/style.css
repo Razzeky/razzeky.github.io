@@ -666,7 +666,7 @@ footer {
     transform: scale(1.1);
     border-color: #b3117d;
 
-    box-shadow: 0 0 15px rgba(179, 17, 125, 0.6);
+    box-shadow: 0 0 15px rgba(179, 17, 125, 0.08);
 }
 
 /* Outlook específico */

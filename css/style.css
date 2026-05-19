@@ -1286,4 +1286,15 @@ footer {
     }
 }
 
+.events-slider {
+    overflow: hidden; /* Esconde a barra de rolagem feia */
+    width: 100%;
+}
 
+.events-track {
+    display: flex;       /* Coloca os cards um ao lado do outro */
+    flex-wrap: nowrap;   /* Impede que eles pulem linha */
+    overflow-x: auto;    /* Permite a rolagem horizontal */
+    scroll-behavior: smooth;
+    gap: 20px;           /* Espaçamento entre os cards */
+}

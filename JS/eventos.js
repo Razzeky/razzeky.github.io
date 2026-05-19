@@ -13,16 +13,19 @@ async function loadEvents() {
 
     const now = new Date().toISOString();
 
-    const url =
-`https://www.googleapis.com/calendar/v3/calendars/${68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e092db75@group.calendar.google.com}/events?key=${AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA}&singleEvents=true&orderBy=startTime&timeMin=${now}`;
+    // CORRIGIDO: Agora a URL usa corretamente as variáveis declaradas acima
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&singleEvents=true&orderBy=startTime&timeMin=${now}`;
 
     const response = await fetch(url);
-
     const data = await response.json();
-
     const events = data.items;
 
-    if (!events || events.length === 0) return;
+    if (!events || events.length === 0) {
+        // Ajuste opcional: se não houver shows, avisa o usuário em vez de travar no "Loading..."
+        document.getElementById("nextShowTitle").innerText = "Nenhum show agendado";
+        document.getElementById("nextShowLocation").innerText = "Em breve novas datas";
+        return;
+    }
 
     /* PRIMEIRO EVENTO */
     const nextEvent = events[0];

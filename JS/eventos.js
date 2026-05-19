@@ -3,10 +3,10 @@
 ========================================================= */
 
 /* SUA API GOOGLE */
-const API_KEY = "SUA_API_KEY";
+const API_KEY = "AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA";
 
 /* ID DO CALENDÁRIO */
-const CALENDAR_ID = "SEU_CALENDARIO";
+const CALENDAR_ID = "68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e092db75@group.calendar.google.com";
 
 /* EVENTOS */
 async function loadEvents() {

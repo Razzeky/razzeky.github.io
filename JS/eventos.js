@@ -118,13 +118,13 @@ loadEvents();
 ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
     const track = document.getElementById("eventsTrack");
-    const prevBtn = document.querySelector(".carousel-btn.prev");
-    const nextBtn = document.querySelector(".carousel-btn.next");
+    const prevBtn = document.querySelector(".prev-events");
+    const nextBtn = document.querySelector(".next-events");
 
     if (!track || !prevBtn || !nextBtn) return;
 
-    // Quantidade de pixels que o slider vai andar para o lado a cada clique
-    const scrollAmount = 320; 
+    // Calcula dinamicamente o tamanho do card + o gap (espaçamento) para rolar certinho
+    const scrollAmount = 355; 
 
     nextBtn.addEventListener("click", () => {
         track.scrollBy({

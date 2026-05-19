@@ -14,7 +14,7 @@ async function loadEvents() {
     const now = new Date().toISOString();
 
     const url =
-`https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&singleEvents=true&orderBy=startTime&timeMin=${now}`;
+`https://www.googleapis.com/calendar/v3/calendars/${68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e092db75@group.calendar.google.com}/events?key=${AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA}&singleEvents=true&orderBy=startTime&timeMin=${now}`;
 
     const response = await fetch(url);
 

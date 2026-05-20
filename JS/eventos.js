@@ -32,7 +32,7 @@ async function loadEvents() {
         document.getElementById("nextShowTitle").innerText = nextEvent.summary;
         document.getElementById("nextShowLocation").innerText = nextEvent.location || "Location TBA";
 
-        /* EXTRAÇÃO DE IMAGEM E LINK DE INGRESSO DA DESCRIÇÃO */
+/* EXTRAÇÃO DE IMAGEM E LINK DE INGRESSO DA DESCRIÇÃO */
         let image = "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1920&auto=format&fit=crop";
         let ticketUrl = "";
 

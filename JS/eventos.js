@@ -26,27 +26,46 @@ async function loadEvents() {
             return;
         }
 
-        /* PRIMEIRO EVENTO */
+        /* PRIMEIRO EVENTO (CARD DE DESTAQUE COM COUNTDOWN) */
         const nextEvent = events[0];
 
         document.getElementById("nextShowTitle").innerText = nextEvent.summary;
         document.getElementById("nextShowLocation").innerText = nextEvent.location || "Location TBA";
 
-        /* IMAGEM */
+        /* EXTRAÇÃO DE IMAGEM E LINK DE INGRESSO DA DESCRIÇÃO */
         let image = "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1920&auto=format&fit=crop";
+        let ticketUrl = "";
 
-        if (nextEvent.description && nextEvent.description.includes("image:")) {
-            image = nextEvent.description.split("image:")[1].trim();
+        if (nextEvent.description) {
+            // Tratamento dinâmico para extrair a imagem da linha
+            if (nextEvent.description.includes("image:")) {
+                image = nextEvent.description.split("image:")[1].split("\n")[0].trim();
+            }
+            // Tratamento dinâmico para extrair o link de ingresso da linha
+            if (nextEvent.description.includes("ticket:")) {
+                ticketUrl = nextEvent.description.split("ticket:")[1].split("\n")[0].trim();
+            }
         }
 
         document.getElementById("nextShowImage").src = image;
+
+        /* ATUALIZAÇÃO DO BOTÃO DE INGRESSOS COMPATÍVEL COM TRADUTOR */
+        const ticketBtn = document.getElementById("nextShowTicketBtn");
+        if (ticketBtn) {
+            if (ticketUrl && (ticketUrl.startsWith("http://") || ticketUrl.startsWith("https://"))) {
+                ticketBtn.href = ticketUrl;
+                ticketBtn.style.display = "inline-flex"; // Mostra o botão se houver link válido
+            } else {
+                ticketBtn.style.display = "none"; // Oculta o botão se não houver link
+            }
+        }
 
         /* COUNTDOWN */
         if (nextEvent.start && (nextEvent.start.dateTime || nextEvent.start.date)) {
             startCountdown(nextEvent.start.dateTime || nextEvent.start.date);
         }
 
-        /* SLIDER */
+        /* SLIDER (LISTA COMPLETA DOS PRÓXIMOS CARDS) */
         const track = document.getElementById("eventsTrack");
         if (!track) return;
 
@@ -56,7 +75,7 @@ async function loadEvents() {
             let eventImage = "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop";
 
             if (event.description && event.description.includes("image:")) {
-                eventImage = event.description.split("image:")[1].trim();
+                eventImage = event.description.split("image:")[1].split("\n")[0].trim();
             }
 
             const date = new Date(event.start.dateTime || event.start.date);
@@ -110,7 +129,7 @@ function startCountdown(date) {
     }, 1000);
 }
 
-// Executa
+// Executa o carregamento inicial
 loadEvents();
 
 /* =========================================================
@@ -123,8 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!track || !prevBtn || !nextBtn) return;
 
-    // Calcula dinamicamente o tamanho do card + o gap (espaçamento) para rolar certinho
-    const scrollAmount = 450; 
+    // Ajustado para 385px acompanhando o novo tamanho do seu card no CSS
+    const scrollAmount = 385; 
 
     nextBtn.addEventListener("click", () => {
         track.scrollBy({

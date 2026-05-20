@@ -1169,132 +1169,82 @@ footer {
         0 0 20px #ff00aa;
 }
 
-/* EVENT SLIDER */
+/* =========================================================
+   CORREÇÃO DO SLIDER DE EVENTOS E NOVOS BOTÕES (ALTERADO)
+========================================================= */
 
-.events-slider {
-
-    overflow: hidden;
-}
-
-.events-track {
-
+.events-slider-container {
+    position: relative;
     display: flex;
-
-    gap: 25px;
-
-    animation: autoSlide 40s linear infinite;
-}
-
-.event-card {
-
-    min-width: 330px;
-
-    background: #111;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    border: 1px solid rgba(255,255,255,0.08);
-
-    transition: 0.4s ease;
-}
-
-.event-card:hover {
-
-    transform: translateY(-10px);
-
-    border-color: #ff0077;
-
-    box-shadow:
-        0 0 30px rgba(255,0,140,0.25);
-}
-
-.event-card img {
-
+    align-items: center;
     width: 100%;
-    height: 240px;
-
-    object-fit: cover;
-}
-
-.event-info {
-
-    padding: 25px;
-}
-
-.event-date {
-
-    color: #ff0077;
-
-    font-size: 0.8rem;
-
-    letter-spacing: 2px;
-
-    display: inline-block;
-
-    margin-bottom: 15px;
-}
-
-.event-info h4 {
-
-    font-size: 1.3rem;
-
-    margin-bottom: 10px;
-}
-
-.event-info p {
-
-    color: #999;
-}
-
-@keyframes autoSlide {
-
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(-50%);
-    }
-}
-
-/* MOBILE */
-
-@media (max-width: 768px) {
-
-    .next-show-card {
-
-        height: 620px;
-    }
-
-    .next-show-content {
-
-        left: 25px;
-        right: 25px;
-    }
-
-    .time-box {
-
-        width: 80px;
-        height: 80px;
-    }
-
-    .event-card {
-
-        min-width: 280px;
-    }
+    margin-top: 30px;
 }
 
 .events-slider {
-    overflow: hidden; /* Esconde a barra de rolagem feia */
+    overflow: hidden;
     width: 100%;
 }
 
 .events-track {
-    display: flex;       /* Coloca os cards um ao lado do outro */
-    flex-wrap: nowrap;   /* Impede que eles pulem linha */
-    overflow-x: auto;    /* Permite a rolagem horizontal */
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 25px;
+    overflow-x: auto;
     scroll-behavior: smooth;
-    gap: 20px;           /* Espaçamento entre os cards */
+    padding: 15px 0;
+    
+    /* REMOVIDO: A animação antiga foi desativada para não travar o JavaScript */
+    animation: none !important; 
+    
+    /* Oculta as barras de rolagem nativas */
+    -ms-overflow-style: none;  /* IE/Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Esconde a barra cinza de rolagem no Chrome, Safari e Opera */
+.events-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* Estilização das setas exclusivas para a seção de shows */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.slider-btn:hover {
+    background: #ff0077;
+    border-color: #ff0077;
+    box-shadow: 0 0 15px #ff0077;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-events {
+    left: -15px;
+}
+
+.next-events {
+    right: -15px;
+}
+
+/* Responsivo para telas menores não cortarem as setas nas laterais */
+@media (max-width: 768px) {
+    .prev-events { left: 5px; }
+    .next-events { right: 5px; }
+    .slider-btn { width: 38px; height: 38px; font-size: 1rem; }
 }

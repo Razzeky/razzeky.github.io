@@ -13,7 +13,7 @@ async function loadEvents() {
     try {
         const now = new Date().toISOString();
 
-        // Linha 17 corrigida usando as variáveis corretas:
+        
         const url = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&singleEvents=true&orderBy=startTime&timeMin=${now}`;
 
         const response = await fetch(url);
@@ -37,13 +37,16 @@ async function loadEvents() {
         let ticketUrl = "";
 
         if (nextEvent.description) {
-            // Tratamento dinâmico para extrair a imagem da linha
-            if (nextEvent.description.includes("image:")) {
-                image = nextEvent.description.split("image:")[1].split("\n")[0].trim();
+            // Remove quebras de linha HTML (<br>, <p>, etc.) e padroniza o texto antes da extração
+            let cleanDesc = nextEvent.description.replace(/<\/?[^>]+(>|$)/g, "\n");
+
+            // Extrai a imagem se existir
+            if (cleanDesc.includes("image:")) {
+                image = cleanDesc.split("image:")[1].split("\n")[0].trim();
             }
-            // Tratamento dinâmico para extrair o link de ingresso da linha
-            if (nextEvent.description.includes("ticket:")) {
-                ticketUrl = nextEvent.description.split("ticket:")[1].split("\n")[0].trim();
+            // Extrai o link do ingresso se existir
+            if (cleanDesc.includes("ticket:")) {
+                ticketUrl = cleanDesc.split("ticket:")[1].split("\n")[0].trim();
             }
         }
 

@@ -52,14 +52,17 @@ async function loadEvents() {
 
         document.getElementById("nextShowImage").src = image;
 
-        /* ATUALIZAÇÃO DO BOTÃO DE INGRESSOS COMPATÍVEL COM TRADUTOR */
+       /* ATUALIZAÇÃO DO BOTÃO DE INGRESSOS */
         const ticketBtn = document.getElementById("nextShowTicketBtn");
         if (ticketBtn) {
             if (ticketUrl && (ticketUrl.startsWith("http://") || ticketUrl.startsWith("https://"))) {
-                ticketBtn.href = ticketUrl;
-                ticketBtn.style.display = "inline-flex"; // Mostra o botão se houver link válido
+                ticketBtn.setAttribute("href", ticketUrl);
+                ticketBtn.href = ticketUrl; // Força em ambas as propriedades do navegador
+                ticketBtn.style.setProperty("display", "inline-flex", "important"); // Garante a visibilidade no CSS
+                console.log("Link do ingresso injetado com sucesso:", ticketUrl);
             } else {
-                ticketBtn.style.display = "none"; // Oculta o botão se não houver link
+                ticketBtn.style.display = "none";
+                console.warn("Nenhum link de ticket válido encontrado para este evento.");
             }
         }
 

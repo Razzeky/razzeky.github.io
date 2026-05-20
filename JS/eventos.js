@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!track || !prevBtn || !nextBtn) return;
 
     // Calcula dinamicamente o tamanho do card + o gap (espaçamento) para rolar certinho
-    const scrollAmount = 355; 
+    const scrollAmount = 450; 
 
     nextBtn.addEventListener("click", () => {
         track.scrollBy({

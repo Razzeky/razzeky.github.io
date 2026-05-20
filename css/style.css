@@ -1242,9 +1242,37 @@ footer {
     right: -15px;
 }
 
-/* Responsivo para telas menores não cortarem as setas nas laterais */
+.event-card {
+    /* Largura aumentada para dar mais presença ao card */
+    width: 960px;
+    min-width: 560px;
+    max-width: 360px;
+
+    background: #111;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-card img {
+    width: 100%;
+    height: 220px; /* Altura proporcional para a nova largura */
+    object-fit: cover;
+}
+
+
 @media (max-width: 768px) {
-    .prev-events { left: 5px; }
-    .next-events { right: 5px; }
-    .slider-btn { width: 38px; height: 38px; font-size: 1rem; }
+    .event-card {
+        /* Largura ajustada para telas mobile */
+        width: 300px;
+        min-width: 300px;
+        max-width: 300px;
+    }
+    
+    .event-card img {
+        height: 180px; /* Altura ideal para o mobile */
+    }
 }

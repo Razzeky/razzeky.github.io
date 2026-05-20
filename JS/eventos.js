@@ -78,7 +78,7 @@ async function loadEvents() {
         track.innerHTML = ""; // Limpa o container antes de colocar os eventos
 
         events.forEach(event => {
-            let eventImage = "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop";
+            let eventImage = ";
 
             if (event.description && event.description.includes("image:")) {
                 eventImage = event.description.split("image:")[1].split("\n")[0].trim();

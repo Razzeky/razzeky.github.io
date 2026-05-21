@@ -39,10 +39,17 @@ async function loadEvents() {
 
         const btn = document.getElementById("nextShowTicketBtn");
 
-        if (ticketUrl) {
-            btn.href = ticketUrl;
-            btn.style.display = "inline-block";
-        }
+   if (ticketUrl && (ticketUrl.startsWith("http://") || ticketUrl.startsWith("https://"))) {
+    
+    btn.setAttribute("href", ticketUrl);
+    btn.setAttribute("target", "_blank");
+    btn.setAttribute("rel", "noopener noreferrer"); // segurança
+
+    btn.style.display = "inline-flex";
+
+} else {
+    btn.style.display = "none";
+}
 
         startCountdown(nextEvent.start.dateTime || nextEvent.start.date);
 

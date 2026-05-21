@@ -1,9 +1,40 @@
 /**
- * Otimização e Inicialização Geral
+ * =========================================
+ * CONTROLE GLOBAL DE IDIOMA
+ * =========================================
+ */
+let currentLang = "pt";
+
+function getText(key) {
+
+    const translations = {
+
+        buy: {
+            pt: "COMPRAR INGRESSO",
+            en: "BUY TICKETS",
+            es: "COMPRAR ENTRADA"
+        },
+
+        soon: {
+            pt: "EM BREVE",
+            en: "COMING SOON",
+            es: "PRÓXIMAMENTE"
+        }
+
+    };
+
+    return translations[key][currentLang] || translations[key]["pt"];
+}
+
+
+/**
+ * =========================================
+ * OTIMIZAÇÃO E INICIALIZAÇÃO
+ * =========================================
  */
 document.addEventListener('DOMContentLoaded', () => {
-    
-    /* === 1. PERFORMANCE DE SCROLL === */
+
+    /* === NAVBAR SCROLL === */
     const navbar = document.querySelector('.navbar');
     let isScrolling = false;
 
@@ -17,15 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* === 2. LINKS INTERNOS === */
+    /* === SCROLL SUAVE === */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
+
             e.preventDefault();
+
             const targetElement = document.querySelector(targetId);
-            
+
             if (targetElement) {
                 targetElement.scrollIntoView({
                     behavior: 'smooth',
@@ -35,14 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* === 3. CARROSSEL DE FOTOS (CORRIGIDO) === */
+    /* === CARROSSEL === */
     const track = document.querySelector('.carousel-track');
     const slides = document.querySelectorAll('.carousel-slide');
     const nextBtn = document.querySelector('.next');
     const prevBtn = document.querySelector('.prev');
 
     let currentIndex = 0;
-    let autoSlideTimer; // Variável para armazenar o controle do tempo
+    let autoSlideTimer;
 
     function updateCarousel() {
         if (track) {
@@ -51,50 +83,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function nextSlide() {
-        currentIndex++;
-        if (currentIndex >= slides.length) {
-            currentIndex = 0;
-        }
+        currentIndex = (currentIndex + 1) % slides.length;
         updateCarousel();
     }
 
     function prevSlide() {
-        currentIndex--;
-        if (currentIndex < 0) {
-            currentIndex = slides.length - 1;
-        }
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
         updateCarousel();
     }
 
-    // Função para iniciar/reiniciar o temporizador automático
     function startAutoSlide() {
-        clearInterval(autoSlideTimer); // Limpa o timer anterior para evitar loops duplicados
-        autoSlideTimer = setInterval(nextSlide, 2000); // Passa a cada 2 segundos
+        clearInterval(autoSlideTimer);
+        autoSlideTimer = setInterval(nextSlide, 4000);
     }
 
-    // Eventos dos botões (com reset do tempo automático)
     if (nextBtn && prevBtn) {
         nextBtn.addEventListener('click', () => {
             nextSlide();
-            startAutoSlide(); // Reinicia o contador para não pular logo em seguida
+            startAutoSlide();
         });
 
         prevBtn.addEventListener('click', () => {
             prevSlide();
-            startAutoSlide(); // Reinicia o contador
+            startAutoSlide();
         });
     }
 
-    // Inicia o carrossel automático assim que a página carrega
     if (slides.length > 0) {
         startAutoSlide();
     }
+
 });
 
 
-/* ============================================================
-   TRADUÇÃO DO SITE
-   ============================================================ */
+/**
+ * =========================================
+ * TRADUÇÃO (NAV + FOOTER)
+ * =========================================
+ */
 const translations = {
     pt: {
         trajetoria: "Minha trajetória",
@@ -120,10 +146,14 @@ const translations = {
 };
 
 function changeLanguage(lang) {
+
+    currentLang = lang;
+
     const t = translations[lang];
     if (!t) return;
 
     const navLinks = document.querySelectorAll(".nav-links a");
+
     if (navLinks.length >= 4) {
         navLinks[0].innerText = t.trajetoria;
         navLinks[1].innerText = t.musicas;
@@ -132,31 +162,35 @@ function changeLanguage(lang) {
     }
 
     const footerTitle = document.querySelector(".footer-content h2");
+
     if (footerTitle) {
         footerTitle.innerText = t.redes;
+    }
+
+    // 🔥 ATUALIZA EVENTOS NO NOVO IDIOMA
+    if (typeof loadEvents === "function") {
+        loadEvents();
     }
 }
 
 
-/* ============================================================
-   PARTÍCULAS (tsParticles)
-   ============================================================ */
+/**
+ * =========================================
+ * PARTÍCULAS
+ * =========================================
+ */
 window.addEventListener("load", async () => {
+
     if (typeof tsParticles !== "undefined") {
+
         await tsParticles.load({
             id: "particles-js",
             options: {
-                background: {
-                    color: "transparent"
-                },
+                background: { color: "transparent" },
                 fpsLimit: 60,
                 particles: {
-                    number: {
-                        value: 60
-                    },
-                    color: {
-                        value: ["#ff00aa", "#7c3aed", "#00ffff"]
-                    },
+                    number: { value: 60 },
+                    color: { value: ["#ff00aa", "#7c3aed", "#00ffff"] },
                     links: {
                         enable: true,
                         color: "#ff00aa",
@@ -168,15 +202,13 @@ window.addEventListener("load", async () => {
                         enable: true,
                         speed: 1.5
                     },
-                    opacity: {
-                        value: 0.3
-                    },
-                    size: {
-                        value: { min: 1, max: 4 }
-                    }
+                    opacity: { value: 0.3 },
+                    size: { value: { min: 1, max: 4 } }
                 },
                 detectRetina: true
             }
         });
+
     }
+
 });

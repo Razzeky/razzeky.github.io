@@ -1362,3 +1362,56 @@ footer {
     opacity: 0.4;
     cursor: not-allowed;
 }
+
+
+
+/* =========================================
+   AJUSTES DO CARD PRINCIPAL (EVENTO)
+========================================= */
+
+/* FUNDO COM IMAGEM */
+.next-show-card {
+    background: url('../imagem/fundo.jpg') center/cover no-repeat;
+}
+
+/* BADGE NO TOPO ESQUERDO */
+.live-badge {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+/* CONTAINER DO RELÓGIO + BOTÃO */
+.countdown-container {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+/* BOTÃO IGUAL AO NEXT SHOW */
+.btn-tickets {
+    display: inline-block;
+    padding: 12px 22px;
+
+    background: #ff0077;
+    border-radius: 30px;
+
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+
+    text-decoration: none;
+    color: #fff;
+
+    box-shadow:
+        0 0 15px #ff0077,
+        0 0 40px #ff0077;
+
+    transition: 0.3s ease;
+}
+
+/* HOVER */
+.btn-tickets:hover {
+    transform: scale(1.08);
+    background: #ff1493;
+}

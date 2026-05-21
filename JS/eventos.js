@@ -62,14 +62,11 @@ async function loadEvents() {
         const btn = document.getElementById("nextShowTicketBtn");
 
         if (ticketUrl) {
-
-            // ✅ FORMA CORRETA (SEM onclick)
             btn.href = ticketUrl;
             btn.target = "_blank";
             btn.rel = "noopener noreferrer";
-
+            btn.innerText = "COMPRAR INGRESSO"; // 🔥 TEXTO NOVO
             btn.style.display = "inline-flex";
-
         } else {
             btn.style.display = "none";
         }
@@ -107,13 +104,13 @@ async function loadEvents() {
                 <div class="event-location">${event.location || "Local a definir"}</div>
 
                 <div class="event-actions">
-                    <button class="btn-event">RSVP</button>
                     
                     ${
                         ticketUrl
-                        ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event">TICKETS</a>`
-                        : `<button class="btn-event">NOTIFY</button>`
+                        ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event buy">COMPRAR INGRESSO</a>`
+                        : `<button class="btn-event disabled">EM BREVE</button>`
                     }
+
                 </div>
 
             </div>
@@ -126,15 +123,13 @@ async function loadEvents() {
 }
 
 /* =========================================
-   COUNTDOWN (CORRIGIDO)
+   COUNTDOWN
 ========================================= */
 let countdownInterval;
 
 function startCountdown(date) {
 
-    if (countdownInterval) {
-        clearInterval(countdownInterval);
-    }
+    if (countdownInterval) clearInterval(countdownInterval);
 
     const eventDate = new Date(date).getTime();
 

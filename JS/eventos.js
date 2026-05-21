@@ -2,7 +2,31 @@ const API_KEY = "AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA";
 const CALENDAR_ID = "68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e092db75@group.calendar.google.com";
 
 /* =========================================
-   FUNÇÃO PARA EXTRAIR URL SEGURA
+   TRADUÇÕES
+========================================= */
+const textMap = {
+    pt: {
+        buy: "COMPRAR INGRESSO",
+        soon: "EM BREVE",
+        noEvents: "Nenhum evento",
+        locationFallback: "Local a definir"
+    },
+    en: {
+        buy: "BUY TICKET",
+        soon: "COMING SOON",
+        noEvents: "No events",
+        locationFallback: "Location TBD"
+    },
+    es: {
+        buy: "COMPRAR ENTRADA",
+        soon: "PRÓXIMAMENTE",
+        noEvents: "Sin eventos",
+        locationFallback: "Ubicación a definir"
+    }
+};
+
+/* =========================================
+   FUNÇÃO PARA EXTRAIR URL
 ========================================= */
 function extractUrl(text, key) {
     if (!text) return "";
@@ -13,10 +37,6 @@ function extractUrl(text, key) {
 
     let raw = clean.split(key)[1].split("\n")[0].trim();
 
-    // NÃO remove espaços internos (evita quebrar URL)
-    raw = raw.trim();
-
-    // adiciona https se necessário
     if (raw && !raw.startsWith("http")) {
         raw = "https://" + raw;
     }
@@ -30,10 +50,33 @@ function extractUrl(text, key) {
 }
 
 /* =========================================
+   EXTRAÇÃO UNIVERSAL (🔥 resolve seu bug)
+========================================= */
+function extractAnyUrl(text) {
+    if (!text) return "";
+
+    const clean = text.replace(/<\/?[^>]+(>|$)/g, " ");
+    const match = clean.match(/https?:\/\/[^\s"]+/);
+
+    return match ? match[0] : "";
+}
+
+/* =========================================
    LOAD EVENTS
 ========================================= */
 async function loadEvents() {
     try {
+        const lang = window.currentLang || "pt";
+        const t = textMap[lang];
+
+        const localeMap = {
+            pt: "pt-BR",
+            en: "en-US",
+            es: "es-ES"
+        };
+
+        const locale = localeMap[lang];
+
         const now = new Date().toISOString();
 
         const url = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&singleEvents=true&orderBy=startTime&timeMin=${now}`;
@@ -43,8 +86,8 @@ async function loadEvents() {
         const events = data.items;
 
         if (!events || events.length === 0) {
-            document.getElementById("nextShowTitle").innerText = "Nenhum evento";
-            document.getElementById("nextShowLocation").innerText = "Em breve";
+            document.getElementById("nextShowTitle").innerText = t.noEvents;
+            document.getElementById("nextShowLocation").innerText = t.soon;
             return;
         }
 
@@ -54,15 +97,13 @@ async function loadEvents() {
         const nextEvent = events[0];
 
         document.getElementById("nextShowTitle").innerText = nextEvent.summary;
-        document.getElementById("nextShowLocation").innerText = nextEvent.location || "Local a definir";
+        document.getElementById("nextShowLocation").innerText = nextEvent.location || t.locationFallback;
 
         let image = extractUrl(nextEvent.description, "image:");
         let ticketUrl = extractUrl(nextEvent.description, "ticket:");
 
-        // 🔥 FALLBACK AUTOMÁTICO (pega qualquer link)
-        if (!ticketUrl && nextEvent.description) {
-            const match = nextEvent.description.match(/https?:\/\/\S+/);
-            if (match) ticketUrl = match[0];
+        if (!ticketUrl) {
+            ticketUrl = extractAnyUrl(nextEvent.description);
         }
 
         document.getElementById("nextShowImage").src = image || "";
@@ -71,17 +112,12 @@ async function loadEvents() {
 
         if (ticketUrl) {
             btn.href = ticketUrl;
-            btn.target = "_blank";
-            btn.rel = "noopener noreferrer";
-            btn.innerText = "COMPRAR INGRESSO";
+            btn.innerText = t.buy;
             btn.style.display = "inline-flex";
         } else {
             btn.style.display = "none";
         }
 
-        /* =========================================
-           COUNTDOWN
-        ========================================= */
         startCountdown(nextEvent.start.dateTime || nextEvent.start.date);
 
         /* =========================================
@@ -94,7 +130,7 @@ async function loadEvents() {
 
             const date = new Date(event.start.dateTime || event.start.date);
 
-            const formattedDate = date.toLocaleDateString("en-US", {
+            const formattedDate = date.toLocaleDateString(locale, {
                 weekday: "short",
                 month: "short",
                 day: "numeric"
@@ -102,10 +138,8 @@ async function loadEvents() {
 
             let ticketUrl = extractUrl(event.description, "ticket:");
 
-            // 🔥 FALLBACK TAMBÉM NA LISTA
-            if (!ticketUrl && event.description) {
-                const match = event.description.match(/https?:\/\/\S+/);
-                if (match) ticketUrl = match[0];
+            if (!ticketUrl) {
+                ticketUrl = extractAnyUrl(event.description);
             }
 
             list.innerHTML += `
@@ -115,14 +149,14 @@ async function loadEvents() {
 
                 <div class="event-name">${event.summary}</div>
 
-                <div class="event-location">${event.location || "Local a definir"}</div>
+                <div class="event-location">${event.location || t.locationFallback}</div>
 
                 <div class="event-actions">
                     
                     ${
                         ticketUrl
-                        ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event buy">COMPRAR INGRESSO</a>`
-                        : `<button class="btn-event disabled">EM BREVE</button>`
+                        ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event buy">${t.buy}</a>`
+                        : `<button class="btn-event disabled">${t.soon}</button>`
                     }
 
                 </div>

@@ -13,8 +13,10 @@ function extractUrl(text, key) {
 
     let raw = clean.split(key)[1].split("\n")[0].trim();
 
-    raw = raw.replace(/\s/g, "");
+    // NÃO remove espaços internos (evita quebrar URL)
+    raw = raw.trim();
 
+    // adiciona https se necessário
     if (raw && !raw.startsWith("http")) {
         raw = "https://" + raw;
     }
@@ -57,6 +59,12 @@ async function loadEvents() {
         let image = extractUrl(nextEvent.description, "image:");
         let ticketUrl = extractUrl(nextEvent.description, "ticket:");
 
+        // 🔥 FALLBACK AUTOMÁTICO (pega qualquer link)
+        if (!ticketUrl && nextEvent.description) {
+            const match = nextEvent.description.match(/https?:\/\/\S+/);
+            if (match) ticketUrl = match[0];
+        }
+
         document.getElementById("nextShowImage").src = image || "";
 
         const btn = document.getElementById("nextShowTicketBtn");
@@ -65,7 +73,7 @@ async function loadEvents() {
             btn.href = ticketUrl;
             btn.target = "_blank";
             btn.rel = "noopener noreferrer";
-            btn.innerText = "COMPRAR INGRESSO"; // 🔥 TEXTO NOVO
+            btn.innerText = "COMPRAR INGRESSO";
             btn.style.display = "inline-flex";
         } else {
             btn.style.display = "none";
@@ -93,6 +101,12 @@ async function loadEvents() {
             }).toUpperCase();
 
             let ticketUrl = extractUrl(event.description, "ticket:");
+
+            // 🔥 FALLBACK TAMBÉM NA LISTA
+            if (!ticketUrl && event.description) {
+                const match = event.description.match(/https?:\/\/\S+/);
+                if (match) ticketUrl = match[0];
+            }
 
             list.innerHTML += `
             <div class="event-row">

@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA";
+const API_KEY = "AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA"; 
 const CALENDAR_ID = "68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e092db75@group.calendar.google.com";
 
 /* =========================================
@@ -13,15 +13,12 @@ function extractUrl(text, key) {
 
     let raw = clean.split(key)[1].split("\n")[0].trim();
 
-    // remove espaços
     raw = raw.replace(/\s/g, "");
 
-    // adiciona https se necessário
     if (raw && !raw.startsWith("http")) {
         raw = "https://" + raw;
     }
 
-    // valida URL
     try {
         new URL(raw);
         return raw;
@@ -65,14 +62,14 @@ async function loadEvents() {
         const btn = document.getElementById("nextShowTicketBtn");
 
         if (ticketUrl) {
-            btn.href = ticketUrl;
 
-            btn.onclick = (e) => {
-                e.preventDefault();
-                window.open(ticketUrl, "_blank");
-            };
+            // ✅ FORMA CORRETA (SEM onclick)
+            btn.href = ticketUrl;
+            btn.target = "_blank";
+            btn.rel = "noopener noreferrer";
 
             btn.style.display = "inline-flex";
+
         } else {
             btn.style.display = "none";
         }
@@ -111,6 +108,7 @@ async function loadEvents() {
 
                 <div class="event-actions">
                     <button class="btn-event">RSVP</button>
+                    
                     ${
                         ticketUrl
                         ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event">TICKETS</a>`
@@ -128,18 +126,27 @@ async function loadEvents() {
 }
 
 /* =========================================
-   COUNTDOWN
+   COUNTDOWN (CORRIGIDO)
 ========================================= */
+let countdownInterval;
+
 function startCountdown(date) {
+
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
 
     const eventDate = new Date(date).getTime();
 
-    setInterval(() => {
+    countdownInterval = setInterval(() => {
 
         const now = new Date().getTime();
         const diff = eventDate - now;
 
-        if (diff <= 0) return;
+        if (diff <= 0) {
+            clearInterval(countdownInterval);
+            return;
+        }
 
         const d = Math.floor(diff / (1000 * 60 * 60 * 24));
         const h = Math.floor((diff / (1000 * 60 * 60)) % 24);

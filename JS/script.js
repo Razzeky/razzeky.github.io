@@ -212,3 +212,8 @@ window.addEventListener("load", async () => {
     }
 
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    translatePage("pt");
+});

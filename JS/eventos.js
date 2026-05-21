@@ -1,19 +1,10 @@
-/* =========================================================
-   GOOGLE CALENDAR EVENTS
-========================================================= */
-
-/* SUA API GOOGLE */
 const API_KEY = "AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA";
-
-/* ID DO CALENDÁRIO */
 const CALENDAR_ID = "68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e092db75@group.calendar.google.com";
 
-/* EVENTOS */
 async function loadEvents() {
     try {
         const now = new Date().toISOString();
 
-        
         const url = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&singleEvents=true&orderBy=startTime&timeMin=${now}`;
 
         const response = await fetch(url);
@@ -21,147 +12,108 @@ async function loadEvents() {
         const events = data.items;
 
         if (!events || events.length === 0) {
-            document.getElementById("nextShowTitle").innerText = "Nenhum show agendado";
-            document.getElementById("nextShowLocation").innerText = "Em breve novas datas";
+            document.getElementById("nextShowTitle").innerText = "Nenhum evento";
             return;
         }
 
-        /* PRIMEIRO EVENTO (CARD DE DESTAQUE COM COUNTDOWN) */
+        /* EVENTO PRINCIPAL */
         const nextEvent = events[0];
 
         document.getElementById("nextShowTitle").innerText = nextEvent.summary;
-        document.getElementById("nextShowLocation").innerText = nextEvent.location || "Location TBA";
+        document.getElementById("nextShowLocation").innerText = nextEvent.location || "Local a definir";
 
-/* EXTRAÇÃO DE IMAGEM E LINK DE INGRESSO DA DESCRIÇÃO */
         let image = "";
         let ticketUrl = "";
 
         if (nextEvent.description) {
-            // Remove quebras de linha HTML (<br>, <p>, etc.) e padroniza o texto antes da extração
-            let cleanDesc = nextEvent.description.replace(/<\/?[^>]+(>|$)/g, "\n");
+            let clean = nextEvent.description.replace(/<\/?[^>]+(>|$)/g, "\n");
 
-            // Extrai a imagem se existir
-            if (cleanDesc.includes("image:")) {
-                image = cleanDesc.split("image:")[1].split("\n")[0].trim();
-            }
-            // Extrai o link do ingresso se existir
-            if (cleanDesc.includes("ticket:")) {
-                ticketUrl = cleanDesc.split("ticket:")[1].split("\n")[0].trim();
-            }
+            if (clean.includes("image:"))
+                image = clean.split("image:")[1].split("\n")[0].trim();
+
+            if (clean.includes("ticket:"))
+                ticketUrl = clean.split("ticket:")[1].split("\n")[0].trim();
         }
 
         document.getElementById("nextShowImage").src = image;
 
-       /* ATUALIZAÇÃO DO BOTÃO DE INGRESSOS */
-        const ticketBtn = document.getElementById("nextShowTicketBtn");
-        if (ticketBtn) {
-            if (ticketUrl && (ticketUrl.startsWith("http://") || ticketUrl.startsWith("https://"))) {
-                ticketBtn.setAttribute("href", ticketUrl);
-                ticketBtn.href = ticketUrl; // Força em ambas as propriedades do navegador
-                ticketBtn.style.setProperty("display", "inline-flex", "important"); // Garante a visibilidade no CSS
-                console.log("Link do ingresso injetado com sucesso:", ticketUrl);
-            } else {
-                ticketBtn.style.display = "none";
-                console.warn("Nenhum link de ticket válido encontrado para este evento.");
-            }
+        const btn = document.getElementById("nextShowTicketBtn");
+
+        if (ticketUrl) {
+            btn.href = ticketUrl;
+            btn.style.display = "inline-block";
         }
 
-        /* COUNTDOWN */
-        if (nextEvent.start && (nextEvent.start.dateTime || nextEvent.start.date)) {
-            startCountdown(nextEvent.start.dateTime || nextEvent.start.date);
-        }
+        startCountdown(nextEvent.start.dateTime || nextEvent.start.date);
 
-        /* SLIDER (LISTA COMPLETA DOS PRÓXIMOS CARDS) */
-        const track = document.getElementById("eventsTrack");
-        if (!track) return;
+        /* LISTA */
+        const list = document.getElementById("eventsList");
+        list.innerHTML = "";
 
-        track.innerHTML = ""; // Limpa o container antes de colocar os eventos
-
-        events.forEach(event => {
-            let eventImage = ";
-
-            if (event.description && event.description.includes("image:")) {
-                eventImage = event.description.split("image:")[1].split("\n")[0].trim();
-            }
+        events.slice(1).forEach(event => {
 
             const date = new Date(event.start.dateTime || event.start.date);
-            const formattedDate = date.toLocaleDateString("pt-BR", {
-                day: "2-digit",
-                month: "short"
-            });
 
-            track.innerHTML += `
-            <div class="event-card">
-                <img src="${eventImage}">
-                <div class="event-info">
-                    <span class="event-date">${formattedDate}</span>
-                    <h4>${event.summary}</h4>
-                    <p>${event.location || "Location TBA"}</p>
+            const formattedDate = date.toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric"
+            }).toUpperCase();
+
+            let ticketUrl = "";
+
+            if (event.description && event.description.includes("ticket:")) {
+                ticketUrl = event.description.split("ticket:")[1].split("\n")[0].trim();
+            }
+
+            list.innerHTML += `
+            <div class="event-row">
+
+                <div class="event-date">${formattedDate}</div>
+
+                <div class="event-name">${event.summary}</div>
+
+                <div class="event-location">${event.location || "Local a definir"}</div>
+
+                <div class="event-actions">
+                    <button class="btn-event">RSVP</button>
+                    ${
+                        ticketUrl
+                        ? `<a href="${ticketUrl}" target="_blank" class="btn-event">TICKETS</a>`
+                        : `<button class="btn-event">NOTIFY</button>`
+                    }
                 </div>
+
             </div>
             `;
         });
-    } catch (error) {
-        console.error("Erro ao carregar os eventos do Google Agenda:", error);
+
+    } catch (e) {
+        console.error(e);
     }
 }
 
 /* COUNTDOWN */
 function startCountdown(date) {
+
     const eventDate = new Date(date).getTime();
 
-    const interval = setInterval(() => {
+    setInterval(() => {
+
         const now = new Date().getTime();
-        const distance = eventDate - now;
+        const diff = eventDate - now;
 
-        if (distance < 0) {
-            clearInterval(interval);
-            document.getElementById("days").innerText = "00";
-            document.getElementById("hours").innerText = "00";
-            document.getElementById("minutes").innerText = "00";
-            document.getElementById("seconds").innerText = "00";
-            return;
-        }
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / 1000 / 60) % 60);
+        const s = Math.floor((diff / 1000) % 60);
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("days").innerText = d;
+        document.getElementById("hours").innerText = h;
+        document.getElementById("minutes").innerText = m;
+        document.getElementById("seconds").innerText = s;
 
-        document.getElementById("days").innerText = String(days).padStart(2, '0');
-        document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-        document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-        document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
     }, 1000);
 }
 
-// Executa o carregamento inicial
 loadEvents();
-
-/* =========================================================
-   CONTROLE DO SLIDER DE EVENTOS (SETAS)
-========================================================= */
-document.addEventListener("DOMContentLoaded", () => {
-    const track = document.getElementById("eventsTrack");
-    const prevBtn = document.querySelector(".prev-events");
-    const nextBtn = document.querySelector(".next-events");
-
-    if (!track || !prevBtn || !nextBtn) return;
-
-    // Ajustado para 385px acompanhando o novo tamanho do seu card no CSS
-    const scrollAmount = 385; 
-
-    nextBtn.addEventListener("click", () => {
-        track.scrollBy({
-            left: scrollAmount,
-            behavior: "smooth"
-        });
-    });
-
-    prevBtn.addEventListener("click", () => {
-        track.scrollBy({
-            left: -scrollAmount,
-            behavior: "smooth"
-        });
-    });
-});

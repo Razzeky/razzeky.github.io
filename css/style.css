@@ -1276,3 +1276,71 @@ footer {
         height: 180px; /* Altura ideal para o mobile */
     }
 }
+
+
+
+/* LISTA DE EVENTOS ESTILO BANDSINTOWN */
+
+.events-list {
+    width: 100%;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.event-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 220px 180px;
+    align-items: center;
+    padding: 18px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: 0.3s;
+}
+
+.event-row:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+.event-date {
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.event-name {
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+.event-location {
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+.event-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-event {
+    padding: 10px 16px;
+    border: 1px solid #444;
+    background: transparent;
+    color: #fff;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-event:hover {
+    background: #ff0077;
+    border-color: #ff0077;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .event-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}

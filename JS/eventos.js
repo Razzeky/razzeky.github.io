@@ -1,6 +1,38 @@
 const API_KEY = "AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA";
 const CALENDAR_ID = "68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e092db75@group.calendar.google.com";
 
+/* =========================================
+   FUNÇÃO PARA EXTRAIR URL SEGURA
+========================================= */
+function extractUrl(text, key) {
+    if (!text) return "";
+
+    let clean = text.replace(/<\/?[^>]+(>|$)/g, "\n");
+
+    if (!clean.includes(key)) return "";
+
+    let raw = clean.split(key)[1].split("\n")[0].trim();
+
+    // remove espaços
+    raw = raw.replace(/\s/g, "");
+
+    // adiciona https se necessário
+    if (raw && !raw.startsWith("http")) {
+        raw = "https://" + raw;
+    }
+
+    // valida URL
+    try {
+        new URL(raw);
+        return raw;
+    } catch {
+        return "";
+    }
+}
+
+/* =========================================
+   LOAD EVENTS
+========================================= */
 async function loadEvents() {
     try {
         const now = new Date().toISOString();
@@ -13,47 +45,46 @@ async function loadEvents() {
 
         if (!events || events.length === 0) {
             document.getElementById("nextShowTitle").innerText = "Nenhum evento";
+            document.getElementById("nextShowLocation").innerText = "Em breve";
             return;
         }
 
-        /* EVENTO PRINCIPAL */
+        /* =========================================
+           EVENTO PRINCIPAL
+        ========================================= */
         const nextEvent = events[0];
 
         document.getElementById("nextShowTitle").innerText = nextEvent.summary;
         document.getElementById("nextShowLocation").innerText = nextEvent.location || "Local a definir";
 
-        let image = "";
-        let ticketUrl = "";
+        let image = extractUrl(nextEvent.description, "image:");
+        let ticketUrl = extractUrl(nextEvent.description, "ticket:");
 
-        if (nextEvent.description) {
-            let clean = nextEvent.description.replace(/<\/?[^>]+(>|$)/g, "\n");
-
-            if (clean.includes("image:"))
-                image = clean.split("image:")[1].split("\n")[0].trim();
-
-            if (clean.includes("ticket:"))
-                ticketUrl = clean.split("ticket:")[1].split("\n")[0].trim();
-        }
-
-        document.getElementById("nextShowImage").src = image;
+        document.getElementById("nextShowImage").src = image || "";
 
         const btn = document.getElementById("nextShowTicketBtn");
 
-   if (ticketUrl && (ticketUrl.startsWith("http://") || ticketUrl.startsWith("https://"))) {
-    
-    btn.setAttribute("href", ticketUrl);
-    btn.setAttribute("target", "_blank");
-    btn.setAttribute("rel", "noopener noreferrer"); // segurança
+        if (ticketUrl) {
+            btn.href = ticketUrl;
 
-    btn.style.display = "inline-flex";
+            btn.onclick = (e) => {
+                e.preventDefault();
+                window.open(ticketUrl, "_blank");
+            };
 
-} else {
-    btn.style.display = "none";
-}
+            btn.style.display = "inline-flex";
+        } else {
+            btn.style.display = "none";
+        }
 
+        /* =========================================
+           COUNTDOWN
+        ========================================= */
         startCountdown(nextEvent.start.dateTime || nextEvent.start.date);
 
-        /* LISTA */
+        /* =========================================
+           LISTA DE EVENTOS
+        ========================================= */
         const list = document.getElementById("eventsList");
         list.innerHTML = "";
 
@@ -67,11 +98,7 @@ async function loadEvents() {
                 day: "numeric"
             }).toUpperCase();
 
-            let ticketUrl = "";
-
-            if (event.description && event.description.includes("ticket:")) {
-                ticketUrl = event.description.split("ticket:")[1].split("\n")[0].trim();
-            }
+            let ticketUrl = extractUrl(event.description, "ticket:");
 
             list.innerHTML += `
             <div class="event-row">
@@ -86,7 +113,7 @@ async function loadEvents() {
                     <button class="btn-event">RSVP</button>
                     ${
                         ticketUrl
-                        ? `<a href="${ticketUrl}" target="_blank" class="btn-event">TICKETS</a>`
+                        ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event">TICKETS</a>`
                         : `<button class="btn-event">NOTIFY</button>`
                     }
                 </div>
@@ -96,11 +123,13 @@ async function loadEvents() {
         });
 
     } catch (e) {
-        console.error(e);
+        console.error("Erro ao carregar eventos:", e);
     }
 }
 
-/* COUNTDOWN */
+/* =========================================
+   COUNTDOWN
+========================================= */
 function startCountdown(date) {
 
     const eventDate = new Date(date).getTime();
@@ -110,17 +139,22 @@ function startCountdown(date) {
         const now = new Date().getTime();
         const diff = eventDate - now;
 
+        if (diff <= 0) return;
+
         const d = Math.floor(diff / (1000 * 60 * 60 * 24));
         const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
         const m = Math.floor((diff / 1000 / 60) % 60);
         const s = Math.floor((diff / 1000) % 60);
 
-        document.getElementById("days").innerText = d;
-        document.getElementById("hours").innerText = h;
-        document.getElementById("minutes").innerText = m;
-        document.getElementById("seconds").innerText = s;
+        document.getElementById("days").innerText = String(d).padStart(2, "0");
+        document.getElementById("hours").innerText = String(h).padStart(2, "0");
+        document.getElementById("minutes").innerText = String(m).padStart(2, "0");
+        document.getElementById("seconds").innerText = String(s).padStart(2, "0");
 
     }, 1000);
 }
 
+/* =========================================
+   INIT
+========================================= */
 loadEvents();

@@ -1344,3 +1344,21 @@ footer {
         gap: 10px;
     }
 }
+
+
+/* BOTÃO COMPRAR INGRESSO */
+.btn-event.buy {
+    border-color: #ff0077;
+    color: #fff;
+}
+
+.btn-event.buy:hover {
+    background: #ff0077;
+    box-shadow: 0 0 15px #ff0077;
+}
+
+/* BOTÃO DESABILITADO */
+.btn-event.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

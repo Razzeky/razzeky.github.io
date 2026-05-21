@@ -106,7 +106,12 @@ async function loadEvents() {
             ticketUrl = extractAnyUrl(nextEvent.description);
         }
 
-        document.getElementById("nextShowImage").src = image || "";
+       // Mantém fundo fixo, não sobrescreve com imagem da API
+if (image) {
+    const img = document.getElementById("nextShowImage");
+    img.src = image;
+    img.style.display = "none";
+}
 
         const btn = document.getElementById("nextShowTicketBtn");
 

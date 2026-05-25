@@ -172,19 +172,14 @@ html, body {
     height: auto;
     object-fit: contain;
 
-    filter:
-        drop-shadow(0 0 15px #fff)
-      drop-shadow(0 0 35px rgba(212, 207, 210, 3.7));
+    /* A combinação abaixo cria um degradê perfeito de brilho branco puro */
+    filter: 
+        drop-shadow(0 0 10px #ffffff)       /* Brilho interno forte */
+        drop-shadow(0 0 25px #ffffff)       /* Expansão média */
+        drop-shadow(0 0 45px rgba(255, 255, 255, 0.5)); /* Brilho externo suave */
 
     transition: 0.4s ease;
 }
-
-/* Ajuste mobile para o logo não ocupar a tela toda */
-@media (max-width: 768px) {
-
-    .hero-logo-container {
-        max-width: 320px;
-    }
 
 }
 

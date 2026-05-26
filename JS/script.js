@@ -69,7 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* === CARROSSEL === */
     const track = document.querySelector('.carousel-track');
-    const slides = document.querySelectorAll('.carousel-slide');
+    function getSlides() {
+    return document.querySelectorAll('.carousel-slide');
+}
     const nextBtn = document.querySelector('.next');
     const prevBtn = document.querySelector('.prev');
 
@@ -83,14 +85,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function nextSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateCarousel();
-    }
+    const slides = getSlides();
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateCarousel();
+}
 
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        updateCarousel();
-    }
+function prevSlide() {
+    const slides = getSlides();
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateCarousel();
+}
 
     function startAutoSlide() {
         clearInterval(autoSlideTimer);
@@ -109,9 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (slides.length > 0) {
-        startAutoSlide();
-    }
+    if (getSlides().length > 0) {
+    startAutoSlide();
+}
 
 });
 

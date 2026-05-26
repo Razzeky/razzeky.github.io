@@ -690,9 +690,33 @@ footer {
 }
 
 .social-item:hover img {
-   
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-    transform: scale(1.1);
+
+    transform: scale(1.12);
+
+    border-color: #ff00aa;
+
+    box-shadow:
+        0 0 10px #ff00aa,
+        0 0 20px #ff00aa,
+        0 0 40px rgba(255, 0, 170, 0.6);
+
+    animation: glowPulse 1.5s infinite alternate;
+
+}
+
+@keyframes glowPulse {
+    from {
+        box-shadow:
+            0 0 8px #ff00aa,
+            0 0 18px #ff00aa,
+            0 0 30px rgba(255, 0, 170, 0.5);
+    }
+    to {
+        box-shadow:
+            0 0 15px #ff00aa,
+            0 0 30px #ff00aa,
+            0 0 60px rgba(255, 0, 170, 0.8);
+    }
 }
 
 .social-item:hover span {

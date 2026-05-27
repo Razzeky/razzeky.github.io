@@ -640,8 +640,8 @@ footer {
 }
 
 .social-item img {
-    width: 65px;  
-    height: 65px;
+    width: 90px;  
+    height: 90px;
 
     object-fit: contain;
     margin-bottom: 12px;
@@ -649,7 +649,7 @@ footer {
     border: 2px solid #fff;
     border-radius: 14px; 
 
-    padding: 10px; 
+    padding: 12px; 
 
     transition: var(--transition);
 }
@@ -1446,7 +1446,7 @@ footer {
 @media (max-width: 768px) {
 
     .live-badge {
-        position: relative; /* 🔥 tira do modo absoluto */
+        position: relative; 
         top: 0;
         left: 0;
 
@@ -1477,7 +1477,7 @@ footer {
 @media (max-width: 768px) {
 
     .next-show-card {
-        height: auto; /* 🔥 remove altura fixa */
+        height: auto; 
         min-height: 420px;
         padding-bottom: 30px;
     }
@@ -1494,7 +1494,7 @@ footer {
     }
 
     .next-show-content {
-        position: relative; /* 🔥 REMOVE ABSOLUTO */
+        position: relative; 
         left: 0;
         bottom: 0;
 
@@ -1533,7 +1533,7 @@ footer {
     }
 
     .countdown-container {
-        flex-direction: column; /* 🔥 botão vai pra baixo */
+        flex-direction: column; 
         gap: 15px;
     }
 
@@ -1541,5 +1541,15 @@ footer {
         width: 100%;
         max-width: 260px;
         text-align: center;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    #nextShowLocation {
+        font-size: 0.85rem; /* 🔽 diminui o tamanho */
+        letter-spacing: 1px; /* opcional: melhora leitura */
+        line-height: 1.4; /* evita ficar apertado */
     }
 }

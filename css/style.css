@@ -1304,7 +1304,7 @@ footer {
 .events-list {
     width: 100%;
     margin-top: 40px;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid #ffffff;
 }
 
 .event-row {
@@ -1312,7 +1312,7 @@ footer {
     grid-template-columns: 140px 1fr 220px 180px;
     align-items: center;
     padding: 18px 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid #ffffff;
     transition: 0.3s;
 }
 

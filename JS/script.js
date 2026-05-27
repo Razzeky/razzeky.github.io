@@ -67,28 +67,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* === CARROSSEL === */
-    const track = document.querySelector('.carousel-track');
-    function getSlides() {
+   /* === CARROSSEL FIXO E FLUIDO === */
+
+const track = document.querySelector('.carousel-track');
+const nextBtn = document.querySelector('.next');
+const prevBtn = document.querySelector('.prev');
+
+let currentIndex = 0;
+let autoSlideTimer = null;
+
+function getSlides() {
     return document.querySelectorAll('.carousel-slide');
 }
-    const nextBtn = document.querySelector('.next');
-    const prevBtn = document.querySelector('.prev');
 
-    let currentIndex = 0;
-    let autoSlideTimer;
+function updateCarousel() {
+    const slides = getSlides();
+    if (!track || slides.length === 0) return;
 
-    function updateCarousel() {
-        if (track) {
-            track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
-    }
+    track.style.transition = "transform 0.5s ease-in-out";
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
 
-  function nextSlide() {
+function nextSlide() {
     const slides = getSlides();
     if (slides.length === 0) return;
 
-    currentIndex = (currentIndex + 1) % slides.length;
+    currentIndex++;
+
+    if (currentIndex >= slides.length) {
+        currentIndex = 0;
+    }
+
     updateCarousel();
 }
 
@@ -96,39 +105,42 @@ function prevSlide() {
     const slides = getSlides();
     if (slides.length === 0) return;
 
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    currentIndex--;
+
+    if (currentIndex < 0) {
+        currentIndex = slides.length - 1;
+    }
+
     updateCarousel();
 }
 
-    function startAutoSlide() {
-        clearInterval(autoSlideTimer);
-        autoSlideTimer = setInterval(nextSlide, 4000);
-    }
+function startAutoSlide() {
+    if (autoSlideTimer) clearInterval(autoSlideTimer);
 
-    if (nextBtn && prevBtn) {
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            startAutoSlide();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            startAutoSlide();
-        });
-    }
-
-    if (getSlides().length > 0) {
-    startAutoSlide();
+    autoSlideTimer = setInterval(() => {
+        nextSlide();
+    }, 4000);
 }
 
-    if (getSlides().length > 0) {
-    updateCarousel(); // 🔥 ESSENCIAL
-    startAutoSlide();
+/* BOTÕES */
+if (nextBtn && prevBtn) {
+
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        startAutoSlide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        startAutoSlide();
+    });
 }
 
-});
-
-
+/* INICIALIZAÇÃO SEGURA */
+if (getSlides().length > 0) {
+    updateCarousel();
+    startAutoSlide();
+}
 /**
  * =========================================
  * TRADUÇÃO (NAV + FOOTER)

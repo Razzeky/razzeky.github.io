@@ -47,11 +47,11 @@ html, body {
     z-index: 2000;
     transition: all 0.4s ease;
 
-    background: linear-gradient(
+   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.95),
-    rgba(255,255,255,0.05)
-); 
+    #edebeb,
+    #1c1c1c
+);
 }
 
 .navbar.scrolled {

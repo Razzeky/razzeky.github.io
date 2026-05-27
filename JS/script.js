@@ -84,14 +84,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function nextSlide() {
+  function nextSlide() {
     const slides = getSlides();
+    if (slides.length === 0) return;
+
     currentIndex = (currentIndex + 1) % slides.length;
     updateCarousel();
 }
 
 function prevSlide() {
     const slides = getSlides();
+    if (slides.length === 0) return;
+
     currentIndex = (currentIndex - 1 + slides.length) % slides.length;
     updateCarousel();
 }
@@ -114,6 +118,11 @@ function prevSlide() {
     }
 
     if (getSlides().length > 0) {
+    startAutoSlide();
+}
+
+    if (getSlides().length > 0) {
+    updateCarousel(); // 🔥 ESSENCIAL
     startAutoSlide();
 }
 

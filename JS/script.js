@@ -67,80 +67,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-   /* === CARROSSEL FIXO E FLUIDO === */
+  /* === CARROSSEL CORRIGIDO (MULTI + ESTÁVEL) === */
 
-const track = document.querySelector('.carousel-track');
-const nextBtn = document.querySelector('.next');
-const prevBtn = document.querySelector('.prev');
+document.querySelectorAll('.carousel-container').forEach(container => {
 
-let currentIndex = 0;
-let autoSlideTimer = null;
+    const track = container.querySelector('.carousel-track');
+    const slides = container.querySelectorAll('.carousel-slide');
+    const nextBtn = container.querySelector('.next');
+    const prevBtn = container.querySelector('.prev');
 
-function getSlides() {
-    return document.querySelectorAll('.carousel-slide');
-}
+    let currentIndex = 0;
+    let autoSlideTimer;
 
-function updateCarousel() {
-    const slides = getSlides();
-    if (!track || slides.length === 0) return;
-
-    track.style.transition = "transform 0.5s ease-in-out";
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
-
-function nextSlide() {
-    const slides = getSlides();
-    if (slides.length === 0) return;
-
-    currentIndex++;
-
-    if (currentIndex >= slides.length) {
-        currentIndex = 0;
+    function updateCarousel() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
 
-    updateCarousel();
-}
-
-function prevSlide() {
-    const slides = getSlides();
-    if (slides.length === 0) return;
-
-    currentIndex--;
-
-    if (currentIndex < 0) {
-        currentIndex = slides.length - 1;
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
     }
 
-    updateCarousel();
-}
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateCarousel();
+    }
 
-function startAutoSlide() {
-    if (autoSlideTimer) clearInterval(autoSlideTimer);
+    function startAutoSlide() {
+        clearInterval(autoSlideTimer);
+        autoSlideTimer = setInterval(nextSlide, 4000);
+    }
 
-    autoSlideTimer = setInterval(() => {
-        nextSlide();
-    }, 4000);
-}
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            startAutoSlide();
+        });
+    }
 
-/* BOTÕES */
-if (nextBtn && prevBtn) {
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            startAutoSlide();
+        });
+    }
 
-    nextBtn.addEventListener('click', () => {
-        nextSlide();
+    if (slides.length > 0) {
+        updateCarousel();
         startAutoSlide();
-    });
+    }
 
-    prevBtn.addEventListener('click', () => {
-        prevSlide();
-        startAutoSlide();
-    });
-}
+});
 
-/* INICIALIZAÇÃO SEGURA */
-if (getSlides().length > 0) {
-    updateCarousel();
-    startAutoSlide();
-}
+    
 /**
  * =========================================
  * TRADUÇÃO (NAV + FOOTER)

@@ -1465,3 +1465,78 @@ footer {
     font-weight: 500;
    
 }
+
+
+/* =========================================
+   AJUSTE RESPONSIVO - NEXT SHOW (MOBILE)
+========================================= */
+
+@media (max-width: 768px) {
+
+    .next-show-card {
+        height: auto; /* 🔥 remove altura fixa */
+        min-height: 420px;
+        padding-bottom: 30px;
+    }
+
+    .next-show-bg {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+    }
+
+    .next-show-overlay {
+        position: absolute;
+        inset: 0;
+    }
+
+    .next-show-content {
+        position: relative; /* 🔥 REMOVE ABSOLUTO */
+        left: 0;
+        bottom: 0;
+
+        padding: 25px 20px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        z-index: 10;
+    }
+
+    .next-show-content h3 {
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+    }
+
+    .next-show-content p {
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+
+    .countdown {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .time-box {
+        width: 70px;
+        height: 70px;
+    }
+
+    .time-box span {
+        font-size: 1.4rem;
+    }
+
+    .countdown-container {
+        flex-direction: column; /* 🔥 botão vai pra baixo */
+        gap: 15px;
+    }
+
+    .btn-tickets {
+        width: 100%;
+        max-width: 260px;
+        text-align: center;
+    }
+}

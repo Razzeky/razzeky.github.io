@@ -79,37 +79,38 @@ function changeLanguage(lang) {
     }
 }
 
-/**
- * =========================================
- * OTIMIZAÇÃO E INICIALIZAÇÃO
- * =========================================
- */
 document.addEventListener('DOMContentLoaded', () => {
+
+const navbar = document.querySelector('.navbar'); // 👈 ADICIONADO
 
 window.addEventListener('scroll', () => {
     requestAnimationFrame(() => {
-        navbar.classList.toggle('scrolled', window.scrollY > 50);
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
     });
 });
 
-    /* === SCROLL SUAVE === */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+/* === SCROLL SUAVE === */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
 
-            e.preventDefault();
+        e.preventDefault();
 
-            const targetElement = document.querySelector(targetId);
+        const targetElement = document.querySelector(targetId);
 
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
+});
 
   /* === CARROSSEL === */
 

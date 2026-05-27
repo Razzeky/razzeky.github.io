@@ -47,16 +47,8 @@ html, body {
     z-index: 2000;
     transition: all 0.4s ease;
 
-    background: linear-gradient(
-        90deg,
-        #ffffff 0%,
-        #cfcfcf 20%,
-        #7a7a7a 45%,
-        #2a2a2a 75%,
-        #000000 100%
-    );
+    background: transparent; /* 🔥 AGORA SIM transparente */
 }
-
 
 .navbar.scrolled {
     padding: 10px 5%;

@@ -183,8 +183,6 @@ function changeLanguage(lang) {
 }
 
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
-    translatePage("pt");
+    changeLanguage("pt");
 });

@@ -34,19 +34,11 @@ function getText(key) {
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* === NAVBAR SCROLL === */
-    const navbar = document.querySelector('.navbar');
-    let isScrolling = false;
-
-    window.addEventListener('scroll', () => {
-        if (!isScrolling) {
-            window.requestAnimationFrame(() => {
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
-                isScrolling = false;
-            });
-            isScrolling = true;
-        }
+window.addEventListener('scroll', () => {
+    requestAnimationFrame(() => {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
+});
 
     /* === SCROLL SUAVE === */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -78,10 +78,14 @@ document.querySelectorAll('.carousel-container').forEach(container => {
 
     let currentIndex = 0;
     let autoSlideTimer;
-
-    function updateCarousel() {
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
+    
+function stopAutoSlide() {
+    clearInterval(autoSlideTimer);
+}
+   function updateCarousel() {
+    const slideWidth = container.clientWidth;
+    track.style.transform = `translate3d(-${currentIndex * slideWidth}px, 0, 0)`;
+}
 
     function nextSlide() {
         currentIndex = (currentIndex + 1) % slides.length;
@@ -94,9 +98,12 @@ document.querySelectorAll('.carousel-container').forEach(container => {
     }
 
     function startAutoSlide() {
-        clearInterval(autoSlideTimer);
-        autoSlideTimer = setInterval(nextSlide, 4000);
-    }
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = setInterval(() => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+    }, 4500);
+}
 
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
@@ -116,7 +123,13 @@ document.querySelectorAll('.carousel-container').forEach(container => {
         updateCarousel();
         startAutoSlide();
     }
+container.addEventListener('mouseenter', () => {
+    clearInterval(autoSlideTimer);
+});
 
+container.addEventListener('mouseleave', startAutoSlide);
+
+window.addEventListener('resize', updateCarousel);
 });
 
     
@@ -178,44 +191,6 @@ function changeLanguage(lang) {
 }
 
 
-/**
- * =========================================
- * PARTÍCULAS
- * =========================================
- */
-window.addEventListener("load", async () => {
-
-    if (typeof tsParticles !== "undefined") {
-
-        await tsParticles.load({
-            id: "particles-js",
-            options: {
-                background: { color: "transparent" },
-                fpsLimit: 60,
-                particles: {
-                    number: { value: 60 },
-                    color: { value: ["#ff00aa", "#7c3aed", "#00ffff"] },
-                    links: {
-                        enable: true,
-                        color: "#ff00aa",
-                        distance: 140,
-                        opacity: 0.2,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 1.5
-                    },
-                    opacity: { value: 0.3 },
-                    size: { value: { min: 1, max: 4 } }
-                },
-                detectRetina: true
-            }
-        });
-
-    }
-
-});
 
 
 document.addEventListener("DOMContentLoaded", () => {

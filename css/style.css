@@ -1,4 +1,3 @@
-
 /* ============================================================
    CORES E VARIÁVEIS
    ============================================================ */
@@ -187,6 +186,14 @@ html, body {
    HERO LAYOUT (TEXTO + GALERIA)
    ============================================================ */
 
+.hero {
+    min-height: 100vh;
+    padding: 140px 5% 80px;
+    background: #1c1c1c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* CONTAINER PRINCIPAL */
 .hero-wrapper {
@@ -200,7 +207,19 @@ html, body {
     gap: 50px;
 }
 
+/* BLOCO DO TEXTO */
+.hero-text {
+    flex: 1;
+    max-width: 650px;
+}
 
+/* BLOCO DA GALERIA */
+.hero-gallery {
+    flex: 1;
+    max-width: 700px;
+    width: 100%;
+   margin-top: 40px;
+}
 
 /* AJUSTE DO CARROSSEL NA HERO */
 .hero-gallery .carousel-container {
@@ -248,7 +267,10 @@ html, body {
         height: 320px;
     }
 
-
+    .bio-description {
+        text-align: center;
+    }
+}
 /* ============================================================
 STREAMING & GALERIA
    ============================================================ */
@@ -277,21 +299,36 @@ STREAMING & GALERIA
     gap: 50px;
 }
 
+/* COLUNA DO TEXTO */
 .hero-text {
     flex: 1;
-    max-width: 650px;
     min-width: 320px;
 }
 
+/* COLUNA DA GALERIA */
 .hero-gallery {
     flex: 1;
-    max-width: 700px;
     min-width: 320px;
-    width: 100%;
-    margin-top: 40px;
 }
 
+/* BIOGRAFIA */
+.bio-description {
+    width: 100%;
+    max-width: 100%;
 
+    text-align: justify;
+    text-justify: inter-word;
+
+    line-height: 1.9;
+
+    font-size: clamp(1rem, 2vw, 1.08rem);
+
+    color: #f5f5f5;
+
+    padding: 0;
+
+    margin-top: 25px;
+}
 
 /* CARROSSEL AO LADO */
 .hero-gallery .carousel-container {
@@ -341,7 +378,7 @@ STREAMING & GALERIA
 
     .bio-description {
 
-        text-align: justify;
+        text-align: center;
 
         line-height: 1.7;
 
@@ -1222,8 +1259,9 @@ footer {
 }
 
 .event-card {
-    width: 360px;
-    min-width: 300px;
+    /* Largura aumentada para dar mais presença ao card */
+    width: 960px;
+    min-width: 560px;
     max-width: 360px;
 
     background: #111;
@@ -1504,22 +1542,8 @@ footer {
 
 @media (max-width: 768px) {
     #nextShowLocation {
-        font-size: 0.85rem; 
-        letter-spacing: 1px; 
-        line-height: 1.4; 
+        font-size: 0.85rem; /* 🔽 diminui o tamanho */
+        letter-spacing: 1px; /* opcional: melhora leitura */
+        line-height: 1.4; /* evita ficar apertado */
     }
-}
-
-
-
-   .next-show-content {
-    max-width: 90%;
-}
-
-.countdown-container {
-    flex-wrap: wrap;
-}
-
-.btn-tickets {
-    white-space: nowrap;
 }

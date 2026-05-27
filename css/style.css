@@ -1304,7 +1304,7 @@ footer {
 .events-list {
     width: 100%;
     margin-top: 40px;
-    border-top: 1px solid #ffffff;
+    border-top: 1px solid rgba(255,255,255,0.6);
 }
 
 .event-row {
@@ -1317,7 +1317,7 @@ footer {
 }
 
 .event-row:hover {
-    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.6);
 }
 
 .event-date {

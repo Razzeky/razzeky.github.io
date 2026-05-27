@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-  /* === CARROSSEL CORRIGIDO (MULTI + ESTÁVEL) === */
+  /* === CARROSSEL === */
 
 document.querySelectorAll('.carousel-container').forEach(container => {
 

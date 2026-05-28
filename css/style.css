@@ -1625,6 +1625,54 @@ footer {
 }
 
 
+/*CONTATOS*/
+.contact-section {
+    display: flex;
+    justify-content: center;
+    padding: 80px 20px;
+}
+
+.contact-grid {
+    width: 100%;
+    max-width: 1100px; 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+
+    justify-content: center;
+}
+
+.contact-card {
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+
+    padding: 30px;
+    border-radius: 16px;
+
+    text-align: center; /* 👈 CENTRALIZA TUDO */
+    color: white;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+    transition: 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(255, 79, 216, 0.15);
+}
+
+.contact-card p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.contact-icon {
+    margin-right: 8px;
+    color: #ff4fd8;
+}
+
+
 
 .contact-icon {
     margin-right: 10px;
@@ -1638,3 +1686,6 @@ footer {
     opacity: 1;
     transform: scale(1.1);
 }
+
+
+

@@ -1550,8 +1550,76 @@ footer {
 
 @media (max-width: 768px) {
     #nextShowLocation {
-        font-size: 0.85rem; /* 🔽 diminui o tamanho */
-        letter-spacing: 1px; /* opcional: melhora leitura */
-        line-height: 1.4; /* evita ficar apertado */
+        font-size: 0.85rem; 
+        letter-spacing: 1px; 
+        line-height: 1.4; 
+    }
+}
+
+
+
+.contact-section {
+    width: 100%;
+    padding: 100px 5%;
+    background: #1c1c1c;
+}
+
+.contact-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.contact-card {
+    background: #111;
+    padding: 30px;
+    border-radius: 15px;
+
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+    transition: 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    border-color: #b3117d;
+    box-shadow: 0 0 25px rgba(179,17,125,0.2);
+}
+
+.contact-card h3 {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.contact-card p {
+    font-size: 0.85rem;
+    color: #bdbdbd;
+    line-height: 1.6;
+}
+
+/* RESPONSIVO TABLET */
+@media (max-width: 900px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* MOBILE AJUSTE */
+@media (max-width: 600px) {
+    .contact-card {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .contact-card h3 {
+        font-size: 0.9rem;
     }
 }

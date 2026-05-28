@@ -1623,3 +1623,18 @@ footer {
         font-size: 0.9rem;
     }
 }
+
+
+
+.contact-icon {
+    margin-right: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    opacity: 0.85;
+    transition: 0.3s;
+}
+
+.contact-icon:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}

@@ -1,88 +1,6 @@
-/**
- * =========================================
- * CONTROLE GLOBAL DE IDIOMA
- * =========================================
- */
-let currentLang = "pt";
-
-const translations = {
-
-    buy: {
-        pt: "COMPRAR INGRESSO",
-        en: "BUY TICKETS",
-        es: "COMPRAR ENTRADA"
-    },
-
-    soon: {
-        pt: "EM BREVE",
-        en: "COMING SOON",
-        es: "PRÓXIMAMENTE"
-    },
-
-    trajetoria: {
-        pt: "Minha trajetória",
-        en: "My Journey",
-        es: "Mi Trayectoria"
-    },
-
-    musicas: {
-        pt: "Músicas",
-        en: "Songs",
-        es: "Música"
-    },
-
-    galeria: {
-        pt: "Galeria",
-        en: "Gallery",
-        es: "Galería"
-    },
-
-    contatos: {
-        pt: "Contatos",
-        en: "Contacts",
-        es: "Contactos"
-    },
-
-    redes: {
-        pt: "REDES SOCIAIS E CONTATOS",
-        en: "SOCIAL MEDIA & CONTACTS",
-        es: "REDES SOCIALES Y CONTACTOS"
-    }
-};
 
 
-function getText(key) {
-    return translations[key]?.[currentLang] || translations[key]?.pt || "";
-}
-
-function changeLanguage(lang) {
-
-    currentLang = lang;
-
-    const navLinks = document.querySelectorAll(".nav-links a");
-
-    if (navLinks.length >= 4) {
-        navLinks[0].innerText = getText("trajetoria");
-        navLinks[1].innerText = getText("musicas");
-        navLinks[2].innerText = getText("galeria");
-        navLinks[3].innerText = getText("contatos");
-    }
-
-    const footerTitle = document.querySelector(".footer-content h2");
-
-    if (footerTitle) {
-        footerTitle.innerText = getText("redes");
-    }
-
-    if (typeof loadEvents === "function") {
-        loadEvents();
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-
-const navbar = document.querySelector('.navbar'); // 👈 ADICIONADO
-
+const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
     requestAnimationFrame(() => {
         if (window.scrollY > 50) {
@@ -189,21 +107,24 @@ const translations = {
         musicas: "Músicas",
         galeria: "Galeria",
         contatos: "Contatos",
-        redes: "REDES SOCIAIS E CONTATOS"
+        redes: "REDES SOCIAIS E CONTATOS",
+        ingresso: "COMPRAR INGRESSO"
     },
     en: {
         trajetoria: "My Journey",
         musicas: "Songs",
         galeria: "Gallery",
         contatos: "Contacts",
-        redes: "SOCIAL MEDIA & CONTACTS"
+        redes: "SOCIAL MEDIA & CONTACTS",
+        ingresso: "BUY TICKET"
     },
     es: {
         trajetoria: "Mi Trayectoria",
         musicas: "Música",
         galeria: "Galería",
         contatos: "Contactos",
-        redes: "REDES SOCIALES Y CONTACTOS"
+        redes: "REDES SOCIALES Y CONTACTOS",
+        ingresso: "COMPRAR ENTRADA"
     }
 };
 

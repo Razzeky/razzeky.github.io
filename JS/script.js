@@ -1,5 +1,3 @@
-
-
 const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
     requestAnimationFrame(() => {
@@ -30,7 +28,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-  /* === CARROSSEL === */
+  /* === CARROSSEL (CORRIGIDO) === */
 
 document.querySelectorAll('.carousel-container').forEach(container => {
 
@@ -39,15 +37,14 @@ document.querySelectorAll('.carousel-container').forEach(container => {
     const nextBtn = container.querySelector('.next');
     const prevBtn = container.querySelector('.prev');
 
+    if (!track || slides.length === 0) return;
+
     let currentIndex = 0;
     let autoSlideTimer;
-    
-function stopAutoSlide() {
-    clearInterval(autoSlideTimer);
-}
+
    function updateCarousel() {
-    const slideWidth = container.clientWidth;
-    track.style.transform = `translate3d(-${currentIndex * slideWidth}px, 0, 0)`;
+    const containerWidth = container.getBoundingClientRect().width;
+    track.style.transform = `translate3d(-${currentIndex * containerWidth}px, 0, 0)`;
 }
 
     function nextSlide() {
@@ -61,12 +58,15 @@ function stopAutoSlide() {
     }
 
     function startAutoSlide() {
-    clearInterval(autoSlideTimer);
-    autoSlideTimer = setInterval(() => {
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateCarousel();
-    }, 4500);
-}
+        clearInterval(autoSlideTimer);
+        autoSlideTimer = setInterval(() => {
+            nextSlide();
+        }, 4500);
+    }
+
+    function stopAutoSlide() {
+        clearInterval(autoSlideTimer);
+    }
 
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
@@ -82,20 +82,15 @@ function stopAutoSlide() {
         });
     }
 
-    if (slides.length > 0) {
-        updateCarousel();
-        startAutoSlide();
-    }
-container.addEventListener('mouseenter', () => {
-    clearInterval(autoSlideTimer);
+    container.addEventListener('mouseenter', stopAutoSlide);
+    container.addEventListener('mouseleave', startAutoSlide);
+
+    window.addEventListener('resize', updateCarousel);
+
+    updateCarousel();
+    startAutoSlide();
 });
 
-container.addEventListener('mouseleave', startAutoSlide);
-
-window.addEventListener('resize', updateCarousel);
-});
-
-    
 /**
  * =========================================
  * TRADUÇÃO (NAV + FOOTER)

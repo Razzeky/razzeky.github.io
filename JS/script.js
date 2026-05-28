@@ -103,7 +103,11 @@ const translations = {
         galeria: "Galeria",
         contatos: "Contatos",
         redes: "REDES SOCIAIS E CONTATOS",
-        ingresso: "COMPRAR INGRESSO"
+        ingresso: "COMPRAR INGRESSO",
+                contratacoes: "CONTRATAÇÕES PARA SHOWS",
+        marketing: "CAMPANHAS, MARKETING E PUBLICIDADE",
+        email: "contato.razzeky@outlook.com",
+        contatoLabel: "Contato",
     },
     en: {
         trajetoria: "My Journey",
@@ -111,7 +115,11 @@ const translations = {
         galeria: "Gallery",
         contatos: "Contacts",
         redes: "SOCIAL MEDIA & CONTACTS",
-        ingresso: "BUY TICKET"
+        ingresso: "BUY TICKET",
+                contratacoes: "SHOW BOOKINGS",
+        marketing: "CAMPAIGNS, MARKETING & ADVERTISING",
+        email: "contact.razzeky@outlook.com",
+        contatoLabel: "Contact",
     },
     es: {
         trajetoria: "Mi Trayectoria",
@@ -119,7 +127,11 @@ const translations = {
         galeria: "Galería",
         contatos: "Contactos",
         redes: "REDES SOCIALES Y CONTACTOS",
-        ingresso: "COMPRAR ENTRADA"
+        ingresso: "COMPRAR ENTRADA",
+                contratacoes: "CONTRATACIONES PARA SHOWS",
+        marketing: "CAMPAÑAS, MARKETING Y PUBLICIDAD",
+        email: "contacto.razzeky@outlook.com",
+        contatoLabel: "Contacto",
     }
 };
 
@@ -139,19 +151,36 @@ function changeLanguage(lang) {
         navLinks[3].innerText = t.contatos;
     }
 
-    const footerTitle = document.querySelector(".footer-content h2");
+       const footerTitle = document.querySelector(".footer-content h2");
 
     if (footerTitle) {
         footerTitle.innerText = t.redes;
     }
 
-    // 🔥 ATUALIZA EVENTOS NO NOVO IDIOMA
+    // 🎧 CONTACT SECTION - CONTRATAÇÕES
+    const contactTitles = document.querySelectorAll(".contact-card h3");
+
+    if (contactTitles.length >= 2) {
+        contactTitles[0].innerText = t.contratacoes;
+        contactTitles[1].innerText = t.marketing;
+    }
+
+    // 📧 EMAILS (todos os textos de email)
+    document.querySelectorAll(".contact-card p").forEach(p => {
+
+        // troca textos simples de email
+        if (p.innerText.includes("contato.razzeky") || p.innerText.includes("contact.razzeky")) {
+            p.innerText = t.email;
+        }
+
+        // troca label "Contato:"
+        if (p.innerText.includes("Contato") || p.innerText.includes("Contact") || p.innerText.includes("Contacto")) {
+            p.innerText = t.contatoLabel + ": " + t.email;
+        }
+    });
+
+    // 🔥 mantém eventos
     if (typeof loadEvents === "function") {
         loadEvents();
     }
 }
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    changeLanguage("pt");
-});

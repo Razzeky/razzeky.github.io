@@ -91,39 +91,52 @@ async function loadEvents() {
             return;
         }
 
-        /* =========================================
-           EVENTO PRINCIPAL
-        ========================================= */
-        const nextEvent = events[0];
+const list = document.getElementById("eventsList");
+list.innerHTML = "";
 
-        document.getElementById("nextShowTitle").innerText = nextEvent.summary;
-        document.getElementById("nextShowLocation").innerText = nextEvent.location || t.locationFallback;
+events.forEach((event, index) => {
 
-        let image = extractUrl(nextEvent.description, "image:");
-        let ticketUrl = extractUrl(nextEvent.description, "ticket:");
+    const date = new Date(event.start.dateTime || event.start.date);
 
-        if (!ticketUrl) {
-            ticketUrl = extractAnyUrl(nextEvent.description);
-        }
+    const formattedDate = date.toLocaleDateString(locale, {
+        weekday: "short",
+        month: "short",
+        day: "numeric"
+    }).toUpperCase();
 
-       // Mantém fundo fixo, não sobrescreve com imagem da API
-if (image) {
-    const img = document.getElementById("nextShowImage");
-    img.src = image;
-    img.style.display = "none";
-}
+    let ticketUrl = extractUrl(event.description, "ticket:");
 
-        const btn = document.getElementById("nextShowTicketBtn");
+    if (!ticketUrl) {
+        ticketUrl = extractAnyUrl(event.description);
+    }
 
-        if (ticketUrl) {
-            btn.href = ticketUrl;
-            btn.innerText = t.buy;
-            btn.style.display = "inline-flex";
-        } else {
-            btn.style.display = "none";
-        }
+  
+    if (index === 0) {
+        startCountdown(event.start.dateTime || event.start.date);
+    }
 
-        startCountdown(nextEvent.start.dateTime || nextEvent.start.date);
+    list.innerHTML += `
+    <div class="event-row ${index === 0 ? 'next-event-highlight' : ''}">
+
+        <div class="event-date">${formattedDate}</div>
+
+        <div class="event-name">${event.summary}</div>
+
+        <div class="event-location">${event.location || t.locationFallback}</div>
+
+        <div class="event-actions">
+            
+            ${
+                ticketUrl
+                ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${t.buy}</a>`
+                : `<button class="btn-event disabled">${t.soon}</button>`
+            }
+
+        </div>
+
+    </div>
+    `;
+});
 
         /* =========================================
            LISTA DE EVENTOS

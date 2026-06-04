@@ -4,27 +4,34 @@ const CALENDAR_ID = "68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e09
 /* =========================================
    TRADUÇÕES
 ========================================= */
-const textMap = {
-    pt: {
-        buy: "COMPRAR INGRESSO",
-        soon: "EM BREVE",
-        noEvents: "Nenhum evento",
-        locationFallback: "Local a definir"
-    },
-    en: {
-        buy: "BUY TICKET",
-        soon: "COMING SOON",
-        noEvents: "No events",
-        locationFallback: "Location TBD"
-    },
-    es: {
-        buy: "COMPRAR ENTRADA",
-        soon: "PRÓXIMAMENTE",
-        noEvents: "Sin eventos",
-        locationFallback: "Ubicación a definir"
-    }
-};
+function getTranslation(key) {
+   const lang = window.currentLang || "pt";
 
+    const translations = {
+        buy: {
+            pt: "COMPRAR INGRESSO",
+            en: "BUY TICKET",
+            es: "COMPRAR ENTRADA"
+        },
+        soon: {
+            pt: "EM BREVE",
+            en: "COMING SOON",
+            es: "PRÓXIMAMENTE"
+        },
+        noEvents: {
+            pt: "Nenhum evento",
+            en: "No events",
+            es: "Sin eventos"
+        },
+        locationFallback: {
+            pt: "Local a definir",
+            en: "Location TBD",
+            es: "Ubicación a definir"
+        }
+    };
+
+    return translations[key][lang];
+}
 /* =========================================
    FUNÇÃO PARA EXTRAIR URL
 ========================================= */
@@ -86,8 +93,8 @@ async function loadEvents() {
         const events = data.items;
 
         if (!events || events.length === 0) {
-            document.getElementById("nextShowTitle").innerText = t.noEvents;
-            document.getElementById("nextShowLocation").innerText = t.soon;
+            document.getElementById("nextShowTitle").innerText = getTranslation("noEvents");
+            document.getElementById("nextShowLocation").innerText = getTranslation("soon");
             return;
         }
 
@@ -122,14 +129,14 @@ events.forEach((event, index) => {
 
         <div class="event-name">${event.summary}</div>
 
-        <div class="event-location">${event.location || t.locationFallback}</div>
+        <div class="event-location">${event.location || getTranslation("locationFallback")}</div>
 
         <div class="event-actions">
             
             ${
                 ticketUrl
-                ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${t.buy}</a>`
-                : `<button class="btn-event disabled">${t.soon}</button>`
+                ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${getTranslation("buy")}</a>`
+                : `<button class="btn-event disabled">${getTranslation("soon")}</button>`
             }
 
         </div>
@@ -167,14 +174,14 @@ events.forEach((event, index) => {
 
                 <div class="event-name">${event.summary}</div>
 
-                <div class="event-location">${event.location || t.locationFallback}</div>
+                <div class="event-location">${event.location || getTranslation("locationFallback")}</div>
 
                 <div class="event-actions">
                     
                     ${
                         ticketUrl
-                        ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event buy">${t.buy}</a>`
-                        : `<button class="btn-event disabled">${t.soon}</button>`
+                        ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event buy">${getTranslation("buy")}</a>`
+                        : `<button class="btn-event disabled">${getTranslation("soon")}</button>`
                     }
 
                 </div>
@@ -188,6 +195,28 @@ events.forEach((event, index) => {
     }
 }
 
+
+list.innerHTML += `
+<div class="event-row ${index === 0 ? 'next-event-highlight' : ''}">
+
+    <div class="event-date">${formattedDate}</div>
+
+    <div class="event-name">${event.summary}</div>
+
+    <div class="event-location">${event.location || getTranslation("locationFallback")}</div>
+
+    <div class="event-actions">
+        
+        ${
+            ticketUrl
+            ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${getTranslation("buy")}</a>`
+            : `<button class="btn-event disabled">${getTranslation("soon")}</button>`
+        }
+
+    </div>
+
+</div>
+`;
 /* =========================================
    COUNTDOWN
 ========================================= */

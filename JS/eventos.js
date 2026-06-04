@@ -121,14 +121,14 @@ if (!list) {
             if (index === 0) {
                 startCountdown(event.start.dateTime || event.start.date);
 
-                countdownHTML = `
-                <div class="countdown-inline">
-                    <span id="days">00</span>d :
-                    <span id="hours">00</span>h :
-                    <span id="minutes">00</span>m :
-                    <span id="seconds">00</span>s
-                </div>
-                `;
+               countdownHTML = `
+<div class="countdown-inline left">
+    <span id="days">00</span>d :
+    <span id="hours">00</span>h :
+    <span id="minutes">00</span>m :
+    <span id="seconds">00</span>s
+</div>
+`;
             }
 
             list.innerHTML += `
@@ -136,10 +136,10 @@ if (!list) {
 
                 <div class="event-date">${formattedDate}</div>
 
-                <div class="event-name">
-                    ${event.summary}
-                    ${countdownHTML}
-                </div>
+               <div class="event-name">
+    ${countdownHTML}
+    <span class="event-title">${event.summary}</span>
+</div>
 
                 <div class="event-location">
                     ${event.location || getTranslation("locationFallback")}

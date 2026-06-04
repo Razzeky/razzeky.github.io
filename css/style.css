@@ -1742,3 +1742,15 @@ footer {
 .countdown-inline span {
     animation: neonPulse 1s infinite alternate;
 }
+
+
+
+.event-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.countdown-inline.left {
+    white-space: nowrap;
+}

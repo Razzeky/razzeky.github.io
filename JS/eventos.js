@@ -196,5 +196,4 @@ function startCountdown(date) {
     }, 1000);
 }
 
-/* INIT */
 loadEvents();

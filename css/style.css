@@ -1315,7 +1315,7 @@ footer {
 
 .event-row {
     display: grid;
-    grid-template-columns: 140px 1fr 220px 180px;
+grid-template-columns: 280px 1fr 220px 180px; 
     align-items: center;
     padding: 18px 10px;
     border-bottom: 1px solid #ffffff;
@@ -1746,9 +1746,10 @@ footer {
 
 
 .event-name {
-    display: flex;
+display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     gap: 6px;
 }
 
@@ -1877,4 +1878,55 @@ footer {
 
 .pres-kit-btn:hover::before {
     left: 100%;
+}
+
+
+
+/* Melhora a performance de renderização das imagens */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    background-color: transparent; 
+    content-visibility: auto; 
+}
+
+.carousel-slide img {
+    aspect-ratio: 16 / 9; 
+    object-fit: cover;
+    width: 100%;
+}
+
+
+/* TUDO DO PRESKIT */
+.presskit-container {
+    display: flex;          
+    justify-content: center; 
+    align-items: center;    
+        width: 100%;  
+      /*  margin: 50px 0; */     
+    }
+
+
+.btn-neon-pink {
+    display: inline-block;
+    padding: 15px 30px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border: 2px solid #ff00ff;
+    border-radius: 5px;
+    background: transparent;
+    transition: 0.3s;
+    box-shadow: 0 0 10px #ff00ff, inset 0 0 5px #ff00ff;
+    text-shadow: 0 0 5px #ff00ff;
+    white-space: nowrap; 
+    }
+
+.btn-neon-pink:hover {
+    background: #ff00ff;
+    color: #000;
+    box-shadow: 0 0 20px #ff00ff, 0 0 50px #ff00ff;
 }

@@ -5,7 +5,7 @@ const CALENDAR_ID = "68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e09
    TRADUÇÕES
 ========================================= */
 function getTranslation(key) {
-   const lang = window.currentLang || "pt";
+    const lang = window.currentLang || "pt";
 
     const translations = {
         buy: {
@@ -32,8 +32,9 @@ function getTranslation(key) {
 
     return translations[key][lang];
 }
+
 /* =========================================
-   FUNÇÃO PARA EXTRAIR URL
+   FUNÇÕES AUXILIARES
 ========================================= */
 function extractUrl(text, key) {
     if (!text) return "";
@@ -56,9 +57,6 @@ function extractUrl(text, key) {
     }
 }
 
-/* =========================================
-   EXTRAÇÃO UNIVERSAL (🔥 resolve seu bug)
-========================================= */
 function extractAnyUrl(text) {
     if (!text) return "";
 
@@ -69,12 +67,11 @@ function extractAnyUrl(text) {
 }
 
 /* =========================================
-   LOAD EVENTS
+   LOAD EVENTS (SOMENTE LISTA)
 ========================================= */
 async function loadEvents() {
     try {
         const lang = window.currentLang || "pt";
-        const t = textMap[lang];
 
         const localeMap = {
             pt: "pt-BR",
@@ -92,100 +89,74 @@ async function loadEvents() {
         const data = await response.json();
         const events = data.items;
 
+        const list = document.getElementById("eventsList");
+        list.innerHTML = "";
+
         if (!events || events.length === 0) {
-            document.getElementById("nextShowTitle").innerText = getTranslation("noEvents");
-            document.getElementById("nextShowLocation").innerText = getTranslation("soon");
+            list.innerHTML = `<div class="event-row">${getTranslation("noEvents")}</div>`;
             return;
         }
 
-const list = document.getElementById("eventsList");
-list.innerHTML = "";
+        events.forEach((event, index) => {
 
-events.forEach((event, index) => {
+            const date = new Date(event.start.dateTime || event.start.date);
 
-    const date = new Date(event.start.dateTime || event.start.date);
+            const formattedDate = date.toLocaleDateString(locale, {
+                weekday: "short",
+                month: "short",
+                day: "numeric"
+            }).toUpperCase();
 
-    const formattedDate = date.toLocaleDateString(locale, {
-        weekday: "short",
-        month: "short",
-        day: "numeric"
-    }).toUpperCase();
+            let ticketUrl = extractUrl(event.description, "ticket:");
+            if (!ticketUrl) ticketUrl = extractAnyUrl(event.description);
 
-    let ticketUrl = extractUrl(event.description, "ticket:");
-    if (!ticketUrl) ticketUrl = extractAnyUrl(event.description);
+            // 🔥 Countdown no primeiro evento
+            let countdownHTML = "";
 
-    // 👉 SE FOR O PRIMEIRO EVENTO
-    let countdownHTML = "";
+            if (index === 0) {
+                startCountdown(event.start.dateTime || event.start.date);
 
-    if (index === 0) {
-        startCountdown(event.start.dateTime || event.start.date);
-
-        countdownHTML = `
-        <div class="countdown-inline">
-            <span id="days">00</span>d :
-            <span id="hours">00</span>h :
-            <span id="minutes">00</span>m :
-            <span id="seconds">00</span>s
-        </div>
-        `;
-    }
-
-    list.innerHTML += `
-    <div class="event-row">
-
-        <div class="event-date">${formattedDate}</div>
-
-        <div class="event-name">
-            ${event.summary}
-            ${countdownHTML}
-        </div>
-
-        <div class="event-location">
-            ${event.location || getTranslation("locationFallback")}
-        </div>
-
-        <div class="event-actions">
-            
-            ${
-                ticketUrl
-                ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${getTranslation("buy")}</a>`
-                : `<button class="btn-event disabled">${getTranslation("soon")}</button>`
+                countdownHTML = `
+                <div class="countdown-inline">
+                    <span id="days">00</span>d :
+                    <span id="hours">00</span>h :
+                    <span id="minutes">00</span>m :
+                    <span id="seconds">00</span>s
+                </div>
+                `;
             }
 
-        </div>
+            list.innerHTML += `
+            <div class="event-row">
 
-    </div>
-    `;
-});
+                <div class="event-date">${formattedDate}</div>
 
-       
+                <div class="event-name">
+                    ${event.summary}
+                    ${countdownHTML}
+                </div>
+
+                <div class="event-location">
+                    ${event.location || getTranslation("locationFallback")}
+                </div>
+
+                <div class="event-actions">
+                    ${
+                        ticketUrl
+                        ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${getTranslation("buy")}</a>`
+                        : `<button class="btn-event disabled">${getTranslation("soon")}</button>`
+                    }
+                </div>
+
+            </div>
+            `;
+        });
+
     } catch (e) {
         console.error("Erro ao carregar eventos:", e);
     }
 }
 
-
-list.innerHTML += `
-<div class="event-row ${index === 0 ? 'next-event-highlight' : ''}">
-
-    <div class="event-date">${formattedDate}</div>
-
-    <div class="event-name">${event.summary}</div>
-
-    <div class="event-location">${event.location || getTranslation("locationFallback")}</div>
-
-    <div class="event-actions">
-        
-        ${
-            ticketUrl
-            ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${getTranslation("buy")}</a>`
-            : `<button class="btn-event disabled">${getTranslation("soon")}</button>`
-        }
-
-    </div>
-
-</div>
-`;
 /* =========================================
    COUNTDOWN
 ========================================= */

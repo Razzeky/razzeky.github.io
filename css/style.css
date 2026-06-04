@@ -1694,3 +1694,51 @@ footer {
     border-left: 3px solid #ff0077;
     background: rgba(255, 0, 119, 0.05);
 }
+
+
+.countdown-inline {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #ff2bd6;
+
+    text-shadow:
+        0 0 5px #ff2bd6,
+        0 0 10px #ff2bd6,
+        0 0 20px #ff2bd6,
+        0 0 40px #ff00cc;
+}
+
+.countdown-inline span {
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+
+    text-shadow:
+        0 0 5px #ff2bd6,
+        0 0 10px #ff2bd6,
+        0 0 20px #ff2bd6,
+        0 0 40px #ff00cc,
+        0 0 60px #ff00cc;
+}
+
+
+@keyframes neonPulse {
+    0% {
+        text-shadow:
+            0 0 5px #ff2bd6,
+            0 0 10px #ff2bd6,
+            0 0 20px #ff2bd6;
+    }
+    100% {
+        text-shadow:
+            0 0 10px #ff2bd6,
+            0 0 20px #ff2bd6,
+            0 0 40px #ff00cc;
+    }
+}
+
+.countdown-inline span {
+    animation: neonPulse 1s infinite alternate;
+}

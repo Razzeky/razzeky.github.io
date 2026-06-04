@@ -112,24 +112,37 @@ events.forEach((event, index) => {
     }).toUpperCase();
 
     let ticketUrl = extractUrl(event.description, "ticket:");
+    if (!ticketUrl) ticketUrl = extractAnyUrl(event.description);
 
-    if (!ticketUrl) {
-        ticketUrl = extractAnyUrl(event.description);
-    }
+    // 👉 SE FOR O PRIMEIRO EVENTO
+    let countdownHTML = "";
 
-  
     if (index === 0) {
         startCountdown(event.start.dateTime || event.start.date);
+
+        countdownHTML = `
+        <div class="countdown-inline">
+            <span id="days">00</span>d :
+            <span id="hours">00</span>h :
+            <span id="minutes">00</span>m :
+            <span id="seconds">00</span>s
+        </div>
+        `;
     }
 
     list.innerHTML += `
-    <div class="event-row ${index === 0 ? 'next-event-highlight' : ''}">
+    <div class="event-row">
 
         <div class="event-date">${formattedDate}</div>
 
-        <div class="event-name">${event.summary}</div>
+        <div class="event-name">
+            ${event.summary}
+            ${countdownHTML}
+        </div>
 
-        <div class="event-location">${event.location || getTranslation("locationFallback")}</div>
+        <div class="event-location">
+            ${event.location || getTranslation("locationFallback")}
+        </div>
 
         <div class="event-actions">
             
@@ -145,54 +158,7 @@ events.forEach((event, index) => {
     `;
 });
 
-        /* =========================================
-           LISTA DE EVENTOS
-        ========================================= */
-       const list = document.getElementById("eventsList");
-list.innerHTML = "";
-
-events.forEach((event, index) => {
-
-    const date = new Date(event.start.dateTime || event.start.date);
-
-    const formattedDate = date.toLocaleDateString(locale, {
-        weekday: "short",
-        month: "short",
-        day: "numeric"
-    }).toUpperCase();
-
-    let ticketUrl = extractUrl(event.description, "ticket:");
-
-    if (!ticketUrl) {
-        ticketUrl = extractAnyUrl(event.description);
-    }
-
-    if (index === 0) {
-        startCountdown(event.start.dateTime || event.start.date);
-    }
-
-    list.innerHTML += `
-    <div class="event-row">
-
-        <div class="event-date">${formattedDate}</div>
-
-        <div class="event-name">${event.summary}</div>
-
-        <div class="event-location">${event.location || t.locationFallback}</div>
-
-        <div class="event-actions">
-            
-            ${
-                ticketUrl
-                ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${t.buy}</a>`
-                : `<button class="btn-event disabled">${t.soon}</button>`
-            }
-
-        </div>
-
-    </div>
-    `;
-});
+       
     } catch (e) {
         console.error("Erro ao carregar eventos:", e);
     }

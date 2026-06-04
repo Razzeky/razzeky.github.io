@@ -148,48 +148,51 @@ events.forEach((event, index) => {
         /* =========================================
            LISTA DE EVENTOS
         ========================================= */
-        const list = document.getElementById("eventsList");
-        list.innerHTML = "";
+       const list = document.getElementById("eventsList");
+list.innerHTML = "";
 
-        events.slice(1).forEach(event => {
+events.forEach((event, index) => {
 
-            const date = new Date(event.start.dateTime || event.start.date);
+    const date = new Date(event.start.dateTime || event.start.date);
 
-            const formattedDate = date.toLocaleDateString(locale, {
-                weekday: "short",
-                month: "short",
-                day: "numeric"
-            }).toUpperCase();
+    const formattedDate = date.toLocaleDateString(locale, {
+        weekday: "short",
+        month: "short",
+        day: "numeric"
+    }).toUpperCase();
 
-            let ticketUrl = extractUrl(event.description, "ticket:");
+    let ticketUrl = extractUrl(event.description, "ticket:");
 
-            if (!ticketUrl) {
-                ticketUrl = extractAnyUrl(event.description);
+    if (!ticketUrl) {
+        ticketUrl = extractAnyUrl(event.description);
+    }
+
+    if (index === 0) {
+        startCountdown(event.start.dateTime || event.start.date);
+    }
+
+    list.innerHTML += `
+    <div class="event-row">
+
+        <div class="event-date">${formattedDate}</div>
+
+        <div class="event-name">${event.summary}</div>
+
+        <div class="event-location">${event.location || t.locationFallback}</div>
+
+        <div class="event-actions">
+            
+            ${
+                ticketUrl
+                ? `<a href="${ticketUrl}" target="_blank" class="btn-event buy">${t.buy}</a>`
+                : `<button class="btn-event disabled">${t.soon}</button>`
             }
 
-            list.innerHTML += `
-            <div class="event-row">
+        </div>
 
-                <div class="event-date">${formattedDate}</div>
-
-                <div class="event-name">${event.summary}</div>
-
-                <div class="event-location">${event.location || getTranslation("locationFallback")}</div>
-
-                <div class="event-actions">
-                    
-                    ${
-                        ticketUrl
-                        ? `<a href="${ticketUrl}" target="_blank" rel="noopener noreferrer" class="btn-event buy">${getTranslation("buy")}</a>`
-                        : `<button class="btn-event disabled">${getTranslation("soon")}</button>`
-                    }
-
-                </div>
-
-            </div>
-            `;
-        });
-
+    </div>
+    `;
+});
     } catch (e) {
         console.error("Erro ao carregar eventos:", e);
     }

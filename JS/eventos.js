@@ -90,6 +90,11 @@ async function loadEvents() {
         const events = data.items;
 
         const list = document.getElementById("eventsList");
+
+if (!list) {
+    console.warn("eventsList não encontrado no HTML");
+    return;
+}
         list.innerHTML = "";
 
         if (!events || events.length === 0) {

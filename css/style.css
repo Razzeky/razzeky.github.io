@@ -1818,3 +1818,20 @@ footer {
 .led-block {
     animation: ledPulse 1.5s infinite alternate;
 }
+
+
+.pres-kit-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #ff3b3b;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.pres-kit-btn:hover {
+    background-color: #d92f2f;
+    transform: scale(1.05);
+}

@@ -1747,8 +1747,9 @@ footer {
 
 .event-name {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
 }
 
 .countdown-inline.left {

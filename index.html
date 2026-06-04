@@ -15,26 +15,23 @@
     <link rel="stylesheet" href="./css/style.css">
 
     <script>
-    let currentLang = "pt";
+function translatePage(lang) {
+    window.currentLang = lang;
 
-    function translatePage(lang) {
+    // 1. Traduz elementos com atributos data-pt/en/es (Bio, Menu, etc)
+    document.querySelectorAll("[data-pt]").forEach(element => {
+        if(lang === "pt") element.innerHTML = element.getAttribute("data-pt");
+        if(lang === "en") element.innerHTML = element.getAttribute("data-en");
+        if(lang === "es") element.innerHTML = element.getAttribute("data-es");
+    });
 
-        currentLang = lang;
-
-        document.querySelectorAll("[data-pt]").forEach(element => {
-
-            if(lang === "pt") element.innerHTML = element.getAttribute("data-pt");
-            if(lang === "en") element.innerHTML = element.getAttribute("data-en");
-            if(lang === "es") element.innerHTML = element.getAttribute("data-es");
-
-        });
-
-     
-        if (typeof loadEvents === "function") {
-            loadEvents();
-        }
+    // 2. Aciona as traduções baseadas em ID do script.js
+    if (typeof changeLanguage === "function") {
+        changeLanguage(lang);
     }
-    </script>
+}
+</script>
+
 
 </head>
 
@@ -141,7 +138,7 @@ Também é referência nos eventos de Drift, levando sua identidade sonora marca
 </div>
 
                     <div class="carousel-slide"><!-- IMG 8 --> 
-  <img src="https://1drv.ms/i/c/edc841626b4480cc/IQSdOJu1aR35SJiYAg2bCZF-AZPv3cdFdtZqclQFiA8TMms"alt="foto8" />
+  <img src="https://1drv.ms/i/c/edc841626b4480cc/IQSdOJu1aR35SJiYAg2bCZF-AZPv3cdFdtZqclQFiA8TMms "alt="foto8" />
 </div>
 
                     <div class="carousel-slide"><!-- IMG 9 --> 
@@ -162,7 +159,7 @@ Também é referência nos eventos de Drift, levando sua identidade sonora marca
   <img src="https://1drv.ms/i/c/edc841626b4480cc/IQQ2WH3Ffi-tR7LC8zqqmcb_AfvNy92JVDZFob94mh4r6Ck"alt="foto13" />
 </div>
                     <div class="carousel-slide"><!-- IMG 14 --> 
-  <img src="https://1drv.ms/i/c/edc841626b4480cc/IQQrANuEx2iZQ6sHPoD_4u3LAYNmfxJ_rto4mJXGRDPLLa8"alt="foto14" />
+  <img src="https://1drv.ms/i/c/edc841626b4480cc/IQQrANuEx2iZQ6sHPoD_4u3LAYNmfxJ_rto4mJXGRDPLLa8" alt="foto14" />
 </div>
                     <div class="carousel-slide"><!-- IMG 15 --> 
   <img src="https://1drv.ms/i/c/edc841626b4480cc/IQTQlB7R5PIMS4Y6kPDCHXeiAT1L1b66sES0gsxEGqhouLI"alt="foto15" />
@@ -182,7 +179,7 @@ Também é referência nos eventos de Drift, levando sua identidade sonora marca
 
 <!-- FOOTER --> <footer id="contatos"> 
     <div class="footer-content">
-        <h2 data-pt="REDES SOCIAIS E CONTATOS" data-en="SOCIAL MEDIA & CONTACTS" data-es="REDES SOCIALES Y CONTACTOS"> REDES SOCIAIS </h2> 
+        <h2 data-pt="REDES SOCIAIS E CONTATOS" data-en="SOCIAL MEDIA & CONTACTS" data-es="REDES SOCIALES Y CONTACTOS" id="id-redes"> REDES SOCIAIS </h2> 
         
        <div class="social-grid">
 
@@ -199,7 +196,7 @@ Também é referência nos eventos de Drift, levando sua identidade sonora marca
     </a>
 
     <!-- Facebook -->
-    <a href="https://www.facebook.com/djrazzeky/" target="_blank" rel="noopener noreferrer" class="social-item">
+    <a href="https://www.facebook.com/djrazzeky" target="_blank" rel="noopener noreferrer" class="social-item">
         <img src="https://cdn.simpleicons.org/facebook/fcf7f7" alt="Facebook">
         <span>Facebook</span>
     </a>
@@ -286,7 +283,7 @@ Também é referência nos eventos de Drift, levando sua identidade sonora marca
 <section id="eventos" class="premium-events">
 
     <div class="section-header">
-        <h2>PRÓXIMOS EVENTOS</h2>
+        <h2 id="id-eventos">PRÓXIMOS EVENTOS</h2>
         <div class="divider"></div>
     </div>
 
@@ -300,7 +297,7 @@ Também é referência nos eventos de Drift, levando sua identidade sonora marca
 
         <!-- CONTRATAÇÕES -->
         <div class="contact-card">
-            <h3>CONTRATAÇÕES PARA SHOWS</h3>
+            <h3 id="id-contratacoes">CONTRATAÇÕES PARA SHOWS</h3>
 
             <p>
               <i class="fa-regular fa-envelope contact-icon"></i>
@@ -313,13 +310,13 @@ Também é referência nos eventos de Drift, levando sua identidade sonora marca
               <i class="fa-solid fa-phone contact-icon"></i>
               +55 11 95409-6060
             </p>
-
+</div>
             <br>
 
 
         <!-- MARKETING -->
         <div class="contact-card">
-            <h3>CAMPANHAS, MARKETING E PUBLICIDADE</h3>
+            <h3 id="id-marketing">CAMPANHAS, MARKETING E PUBLICIDADE</h3>
 
             <p>
               <i class="fa-regular fa-envelope contact-icon"></i>
@@ -334,6 +331,22 @@ Também é referência nos eventos de Drift, levando sua identidade sonora marca
 
     </div>
 </section>
+
+    <br>
+    <br>
+    <br>
+
+<div class="presskit-container">
+    <a href="https://drive.google.com/drive/folders/1oX0V06nQgKntWLgqIZVSaLWC_Hq8ASwq" 
+       target="_blank" 
+       class="btn-neon-pink"
+       data-pt="PRESSKIT DJ RAZZEKY" 
+       data-en="DJ RAZZEKY PRESSKIT" 
+       data-es="PRESSKIT DJ RAZZEKY">
+       PRESSKIT DJ RAZZEKY
+    </a>
+</div>
+    
 
     <br>
     <br>

@@ -1822,16 +1822,59 @@ footer {
 
 .pres-kit-btn {
     display: inline-block;
-    padding: 12px 20px;
-    background-color: #ff3b3b;
-    color: white;
+    margin-left: 15px;
+    padding: 10px 18px;
+    
+    color: #fff;
+    font-weight: 800;
     text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: 0.3s;
+    letter-spacing: 1px;
+
+    border: 2px solid #ff1a1a;
+    border-radius: 10px;
+
+    background: transparent;
+
+    /* Glow inicial */
+    box-shadow: 0 0 5px #ff1a1a, 0 0 10px #ff1a1a inset;
+
+    transition: 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Efeito hover neon forte */
 .pres-kit-btn:hover {
-    background-color: #d92f2f;
-    transform: scale(1.05);
+    background: #ff1a1a;
+    color: #000;
+
+    box-shadow: 
+        0 0 10px #ff1a1a,
+        0 0 25px #ff1a1a,
+        0 0 50px #ff1a1a;
+    
+    transform: scale(1.08);
+}
+
+/* Linha de brilho animada */
+.pres-kit-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 26, 26, 0.4),
+        transparent
+    );
+
+    transition: 0.5s;
+}
+
+.pres-kit-btn:hover::before {
+    left: 100%;
 }

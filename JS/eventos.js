@@ -1,3 +1,74 @@
+const API_KEY = "AIzaSyA1H4PArZKsPn4VqOIBaBSn9zIH_zSpZfA"; 
+const CALENDAR_ID = "68829841e5e2805d5cfd4c427301afeee38900f1e14aa26b8aa5e475e092db75@group.calendar.google.com";
+
+/* =========================================
+   TRADUÇÕES
+========================================= */
+function getTranslation(key) {
+    const lang = window.currentLang || "pt";
+
+    const translations = {
+        buy: {
+            pt: "COMPRAR INGRESSO",
+            en: "BUY TICKET",
+            es: "COMPRAR ENTRADA"
+        },
+        soon: {
+            pt: "EM BREVE",
+            en: "COMING SOON",
+            es: "PRÓXIMAMENTE"
+        },
+        noEvents: {
+            pt: "Nenhum evento",
+            en: "No events",
+            es: "Sin eventos"
+        },
+        locationFallback: {
+            pt: "Local a definir",
+            en: "Location TBD",
+            es: "Ubicación a definir"
+        }
+    };
+
+    return translations[key][lang];
+}
+
+/* =========================================
+   EXTRAÇÃO DE URL
+========================================= */
+function extractUrl(text, key) {
+    if (!text) return "";
+
+    let clean = text.replace(/<\/?[^>]+(>|$)/g, "\n");
+
+    if (!clean.includes(key)) return "";
+
+    let raw = clean.split(key)[1].split("\n")[0].trim();
+
+    if (raw && !raw.startsWith("http")) {
+        raw = "https://" + raw;
+    }
+
+    try {
+        new URL(raw);
+        return raw;
+    } catch {
+        return "";
+    }
+}
+
+function extractAnyUrl(text) {
+    if (!text) return "";
+
+    const clean = text.replace(/<\/?[^>]+(>|$)/g, " ");
+    const match = clean.match(/https?:\/\/[^\s"]+/);
+
+    return match ? match[0] : "";
+}
+
+/* =========================================
+   LOAD EVENTS (SOMENTE LISTA)
+========================================= */
 async function loadEvents() {
     try {
         const lang = window.currentLang || "pt";
@@ -19,12 +90,6 @@ async function loadEvents() {
         const events = data.items;
 
         const list = document.getElementById("eventsList");
-
-        if (!list) {
-            console.error("Elemento #eventsList não encontrado");
-            return;
-        }
-
         list.innerHTML = "";
 
         if (!events || events.length === 0) {
@@ -45,6 +110,7 @@ async function loadEvents() {
             let ticketUrl = extractUrl(event.description, "ticket:");
             if (!ticketUrl) ticketUrl = extractAnyUrl(event.description);
 
+            /* COUNTDOWN SÓ NO PRIMEIRO */
             let countdownHTML = "";
 
             if (index === 0) {
@@ -90,3 +156,40 @@ async function loadEvents() {
         console.error("Erro ao carregar eventos:", e);
     }
 }
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+let countdownInterval;
+
+function startCountdown(date) {
+
+    if (countdownInterval) clearInterval(countdownInterval);
+
+    const eventDate = new Date(date).getTime();
+
+    countdownInterval = setInterval(() => {
+
+        const now = new Date().getTime();
+        const diff = eventDate - now;
+
+        if (diff <= 0) {
+            clearInterval(countdownInterval);
+            return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / 1000 / 60) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("days").innerText = String(d).padStart(2, "0");
+        document.getElementById("hours").innerText = String(h).padStart(2, "0");
+        document.getElementById("minutes").innerText = String(m).padStart(2, "0");
+        document.getElementById("seconds").innerText = String(s).padStart(2, "0");
+
+    }, 1000);
+}
+
+/* INIT */
+loadEvents();

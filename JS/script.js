@@ -28,10 +28,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-  /* === CARROSSEL (CORRIGIDO) === */
-
+/* === CARROSSEL === */
 document.querySelectorAll('.carousel-container').forEach(container => {
-
     const track = container.querySelector('.carousel-track');
     const slides = container.querySelectorAll('.carousel-slide');
     const nextBtn = container.querySelector('.next');
@@ -42,10 +40,10 @@ document.querySelectorAll('.carousel-container').forEach(container => {
     let currentIndex = 0;
     let autoSlideTimer;
 
-   function updateCarousel() {
-    const containerWidth = container.getBoundingClientRect().width;
-    track.style.transform = `translate3d(-${currentIndex * containerWidth}px, 0, 0)`;
-}
+    function updateCarousel() {
+        const containerWidth = container.getBoundingClientRect().width;
+        track.style.transform = `translate3d(-${currentIndex * containerWidth}px, 0, 0)`;
+    }
 
     function nextSlide() {
         currentIndex = (currentIndex + 1) % slides.length;
@@ -93,94 +91,90 @@ document.querySelectorAll('.carousel-container').forEach(container => {
 
 /**
  * =========================================
- * TRADUÇÃO (NAV + FOOTER)
+ * SISTEMA DE TRADUÇÃO ATUALIZADO (POR IDS)
  * =========================================
  */
 const translations = {
     pt: {
-        trajetoria: "Minha trajetória",
-        musicas: "Músicas",
-        galeria: "Galeria",
-        contatos: "Contatos",
         redes: "REDES SOCIAIS E CONTATOS",
-        ingresso: "COMPRAR INGRESSO",
-                contratacoes: "CONTRATAÇÕES PARA SHOWS",
+        contratacoes: "CONTRATAÇÕES PARA SHOWS",
         marketing: "CAMPANHAS, MARKETING E PUBLICIDADE",
         email: "contato.razzeky@outlook.com",
         contatoLabel: "Contato",
+        proximosEventos: "PRÓXIMOS EVENTOS"
     },
     en: {
-        trajetoria: "My Journey",
-        musicas: "Songs",
-        galeria: "Gallery",
-        contatos: "Contacts",
         redes: "SOCIAL MEDIA & CONTACTS",
-        ingresso: "BUY TICKET",
-                contratacoes: "SHOW BOOKINGS",
+        contratacoes: "SHOW BOOKINGS",
         marketing: "CAMPAIGNS, MARKETING & ADVERTISING",
         email: "contact.razzeky@outlook.com",
         contatoLabel: "Contact",
+        proximosEventos: "UPCOMING EVENTS"
     },
     es: {
-        trajetoria: "Mi Trayectoria",
-        musicas: "Música",
-        galeria: "Galería",
-        contatos: "Contactos",
         redes: "REDES SOCIALES Y CONTACTOS",
-        ingresso: "COMPRAR ENTRADA",
-                contratacoes: "CONTRATACIONES PARA SHOWS",
+        contratacoes: "CONTRATACIONES PARA SHOWS",
         marketing: "CAMPAÑAS, MARKETING Y PUBLICIDAD",
         email: "contacto.razzeky@outlook.com",
         contatoLabel: "Contacto",
+        proximosEventos: "PRÓXIMOS EVENTOS"
     }
 };
 
 function changeLanguage(lang) {
-
-    currentLang = lang;
+    window.currentLang = lang;
 
     const t = translations[lang];
     if (!t) return;
 
-    const navLinks = document.querySelectorAll(".nav-links a");
+    // Tradução cirúrgica pelos IDs do HTML
+    const elEventos = document.getElementById("id-eventos");
+    const elContratacoes = document.getElementById("id-contratacoes");
+    const elMarketing = document.getElementById("id-marketing");
+    const elRedes = document.getElementById("id-redes");
 
-    if (navLinks.length >= 4) {
-        navLinks[0].innerText = t.trajetoria;
-        navLinks[1].innerText = t.musicas;
-        navLinks[2].innerText = t.galeria;
-        navLinks[3].innerText = t.contatos;
-    }
+    if (elEventos) elEventos.innerText = t.proximosEventos;
+    if (elContratacoes) elContratacoes.innerText = t.contratacoes;
+    if (elMarketing) elMarketing.innerText = t.marketing;
+    if (elRedes) elRedes.innerText = t.redes;
 
-       const footerTitle = document.querySelector(".footer-content h2");
-
-    if (footerTitle) {
-        footerTitle.innerText = t.redes;
-    }
-
-    // 🎧 CONTACT SECTION - CONTRATAÇÕES
-    const contactTitles = document.querySelectorAll(".contact-card h3");
-
-    if (contactTitles.length >= 2) {
-        contactTitles[0].innerText = t.contratacoes;
-        contactTitles[1].innerText = t.marketing;
-    }
-
-    // 📧 EMAILS (todos os textos de email)
+    // Traduz textos menores internos (Emails e fones)
     document.querySelectorAll(".contact-card p").forEach(p => {
-
-        // troca textos simples de email
         if (p.innerText.includes("contato.razzeky") || p.innerText.includes("contact.razzeky")) {
             p.innerText = t.email;
         }
-
-        // troca label "Contato:"
-        if (p.innerText.includes("Contato") || p.innerText.includes("Contact") || p.innerText.includes("Contacto")) {
-            p.innerText = t.contatoLabel + ": " + t.email;
+        if (p.innerText.includes("Contato:") || p.innerText.includes("Contact:") || p.innerText.includes("Contacto:")) {
+            const content = p.innerText.split(":")[1] || ""; 
+            p.innerText = t.contatoLabel + ":" + content;
         }
     });
 
-    // 🔥 mantém eventos
+    // Dispara a atualização do eventos.js
     if (typeof loadEvents === "function") {
         loadEvents();
     }
 }
+
+/* === OTIMIZAÇÃO DE CARREGAMENTO DE IMAGENS === */
+document.addEventListener("DOMContentLoaded", () => {
+    const images = document.querySelectorAll('img');
+
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (!img.getAttribute('loading')) {
+                    img.setAttribute('loading', 'lazy');
+                }
+                img.style.opacity = "1";
+                observer.unobserve(img);
+            }
+        });
+    });
+
+    images.forEach(img => {
+        img.style.opacity = "0";
+        img.style.transition = "opacity 0.5s ease-in-out";
+        imageObserver.observe(img);
+    });
+});

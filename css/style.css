@@ -1320,6 +1320,7 @@ grid-template-columns: 280px 1fr 220px 180px;
     padding: 18px 10px;
     border-bottom: 1px solid #ffffff;
     transition: 0.3s;
+   column-gap: 40px;
 }
 
 .event-row:hover {

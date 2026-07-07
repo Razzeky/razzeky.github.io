@@ -1341,6 +1341,7 @@ grid-template-columns: 280px 1fr 220px 180px;
 .event-location {
     font-size: 0.85rem;
     color: #aaa;
+   margin-right: 30px;
 }
 
 .event-actions {

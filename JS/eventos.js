@@ -9,14 +9,14 @@ function getTranslation(key) {
 
     const translations = {
         buy: {
-            pt: "COMPRAR INGRESSO",
-            en: "BUY TICKET",
-            es: "COMPRAR ENTRADA"
+            pt: "    COMPRAR INGRESSO",
+            en: "    BUY TICKET",
+            es: "    COMPRAR ENTRADA"
         },
         soon: {
-            pt: "EM BREVE",
-            en: "COMING SOON",
-            es: "PRÓXIMAMENTE"
+            pt: "    EM BREVE",
+            en: "    COMING SOON",
+            es: "    PRÓXIMAMENTE"
         },
         noEvents: {
             pt: "Nenhum evento",

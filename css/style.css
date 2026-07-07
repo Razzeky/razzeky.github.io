@@ -1349,6 +1349,7 @@ grid-template-columns: 280px 1fr 220px 180px;
 .event-actions {
     display: flex;
     gap: 10px;
+    justify-content: flex-end; 
 }
 
 .btn-event {

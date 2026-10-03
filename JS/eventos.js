@@ -2,6 +2,7 @@ const API_KEY = window.APP_CONFIG ? window.APP_CONFIG.API_KEY : "";
 const CALENDAR_ID = window.APP_CONFIG ? window.APP_CONFIG.CALENDAR_ID : "";
 /* =========================================
    TRADUÇÕES
+   
 ========================================= */
 function getTranslation(key) {
     const lang = window.currentLang || "pt";

@@ -89,70 +89,6 @@ document.querySelectorAll('.carousel-container').forEach(container => {
     startAutoSlide();
 });
 
-
-
-/* === CARROSSEL === */
-document.querySelectorAll('.carousel-container').forEach(container => {
-    const track = container.querySelector('.carousel-track');
-    const slides = container.querySelectorAll('.carousel-slide');
-    const nextBtn = container.querySelector('.next');
-    const prevBtn = container.querySelector('.prev');
-
-    if (!track || slides.length === 0) return;
-
-    let currentIndex = 0;
-    let autoSlideTimer;
-
-    function updateCarousel() {
-        const containerWidth = container.getBoundingClientRect().width;
-        track.style.transform = `translate3d(-${currentIndex * containerWidth}px, 0, 0)`;
-    }
-
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateCarousel();
-    }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        updateCarousel();
-    }
-
-    function startAutoSlide() {
-        clearInterval(autoSlideTimer);
-        autoSlideTimer = setInterval(() => {
-            nextSlide();
-        }, 4500);
-    }
-
-    function stopAutoSlide() {
-        clearInterval(autoSlideTimer);
-    }
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            startAutoSlide();
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            startAutoSlide();
-        });
-    }
-
-    container.addEventListener('mouseenter', stopAutoSlide);
-    container.addEventListener('mouseleave', startAutoSlide);
-
-    window.addEventListener('resize', updateCarousel);
-
-    updateCarousel();
-    startAutoSlide();
-});
-
-
 /* ========================================================================== */
 /* 👇 COLOQUE O SEU TRECHO DO GOOGLE DRIVE EXATAMENTE AQUI EMBAIXO 👇          */
 /* ========================================================================== 
@@ -190,8 +126,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 */
-
-
 
 /**
  * =========================================

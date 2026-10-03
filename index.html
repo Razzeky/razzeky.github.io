@@ -61,7 +61,7 @@
 
 <!-- HERO -->
 <header class="hero" id="inicio">
-    <div class="hero-wrapper">
+    <div class="hero-content">
 
         <div class="hero-text">
             <div class="hero-logo-container">
@@ -79,7 +79,23 @@
             </p>
         </div>
 
-        <div class="hero-gallery">
+
+
+<!-- 
+<div class="hero-gallery">
+            <div class="carousel-container">
+                O ID abaixo permite que o script preencha as fotos do Google Drive sozinho 
+
+                <div class="carousel-track" id="dynamicCarouselTrack">
+                   
+                </div>
+
+                <button class="carousel-btn prev">&#10094;</button>
+                <button class="carousel-btn next">&#10095;</button>
+            </div>
+        </div>
+-->
+                <div class="hero-gallery">
             <div class="carousel-container">
                 <div class="carousel-track">
                      <div class="carousel-slide">
@@ -140,7 +156,7 @@
     </div>
 </header>
 
-<!-- FOOTER --> 
+<!-- FOOTER / REDES SOCIAIS --> 
 <footer id="contatos"> 
     <div class="footer-content">
         <h2 data-pt="REDES SOCIAIS E CONTATOS" data-en="SOCIAL MEDIA & CONTACTS" data-es="REDES SOCIALES Y CONTACTOS" id="id-redes"> REDES SOCIAIS </h2> 
@@ -161,17 +177,17 @@
                 <img src="https://cdn.simpleicons.org/facebook/fcf7f7" loading="lazy" decoding="async" alt="Facebook">
                 <span>Facebook</span>
             </a>
-            <!-- YouTube -->
+            <!-- YouTube 
             <a href="https://youtube.com/@djrazzeky" target="_blank" rel="noopener noreferrer" class="social-item">
                 <img src="https://cdn.simpleicons.org/youtube/fcf7f7" loading="lazy" decoding="async" alt="YouTube">
-                <span>YouTube</span>
-            </a>
+                <span>YouTube</span> 
+            </a> -->
         </div>
     </div>
     
     <br><br><br>
 
-<!-- STREAMING -->
+<!-- STREAMING (NOVA ESTRUTURA: Spotify/SoundCloud à esquerda e YouTube à direita) -->
 <section id="streaming" class="streaming-section">
     <div class="section-header">
         <h2
@@ -183,34 +199,55 @@
         <div class="divider"></div>
     </div>
 
-    <div class="players-container">
-        <!-- Spotify -->
-        <div class="player-card">
-            <h3 class="platform-title">Spotify</h3>
-            <iframe
-                style="border-radius:12px"
-                src="https://open.spotify.com/embed/playlist/6HmHu9iKvarTlQYciPDGOa?utm_source=generator&theme=0"
-                width="100%"
-                height="450"
-                frameborder="0"
-                allowfullscreen=""
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy">
-            </iframe>
+    <div class="streaming-layout">
+        
+        <!-- COLUNA DA ESQUERDA: Spotify (em cima) e SoundCloud (embaixo) -->
+        <div class="streaming-column-left">
+            <!-- Spotify -->
+            <div class="player-card">
+                <h3 class="platform-title">Spotify</h3>
+                <iframe
+                    style="border-radius:12px"
+                    src="https://open.spotify.com/embed/playlist/6HmHu9iKvarTlQYciPDGOa?utm_source=generator&theme=0"
+                    width="100%"
+                    height="152"
+                    frameborder="0"
+                    allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+            </div>
+
+            <!-- Soundcloud -->
+            <div class="player-card">
+                <h3 class="platform-title">SOUNDCLOUD</h3>
+                <iframe
+                    width="100%"
+                    height="166"
+                    scrolling="no"
+                    frameborder="no"
+                    allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/djrazzeky&color=%231db954&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=false">
+                </iframe>
+            </div>
         </div>
 
-        <!-- Soundcloud -->
-        <div class="player-card">
-            <h3 class="platform-title">SOUNDCLOUD</h3>
-            <iframe
-                width="100%"
-                height="450"
-                scrolling="no"
-                frameborder="no"
-                allow="autoplay"
-                src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/djrazzeky&color=%231db954&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
-            </iframe>
+        <!-- COLUNA DA DIREITA: Vídeo do YouTube em Destaque -->
+        <div class="streaming-column-right">
+            <div class="player-card">
+                <h3 class="platform-title">YouTube</h3>
+                <iframe 
+                    width="100%" 
+                    height="360" 
+                    src="https://www.youtube.com/embed/SEU_VIDEO_ID" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
+
     </div>
 </section>
 

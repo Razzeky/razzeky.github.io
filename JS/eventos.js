@@ -1,8 +1,8 @@
 const API_KEY = window.APP_CONFIG ? window.APP_CONFIG.API_KEY : "";
 const CALENDAR_ID = window.APP_CONFIG ? window.APP_CONFIG.CALENDAR_ID : "";
+
 /* =========================================
    TRADUÇÕES
-   
 ========================================= */
 function getTranslation(key) {
     const lang = window.currentLang || "pt";
@@ -67,7 +67,7 @@ function extractAnyUrl(text) {
 }
 
 /* =========================================
-   LOAD EVENTS (SOMENTE LISTA)
+   LOAD EVENTS (CORRIGIDO PARA FUSO HORÁRIO)
 ========================================= */
 async function loadEvents() {
     try {
@@ -81,20 +81,32 @@ async function loadEvents() {
 
         const locale = localeMap[lang];
 
-        const now = new Date().toISOString();
+        // Garante que pegamos o início do dia atual de forma segura para a API
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const now = today.toISOString();
 
         const url = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&singleEvents=true&orderBy=startTime&timeMin=${now}`;
 
         const response = await fetch(url);
         const data = await response.json();
-        const events = data.items;
 
+        // Se o Google retornar um erro na API, logamos no console e avisamos na tela
+        if (data.error) {
+            console.error("Erro da API do Google Calendar:", data.error.message);
+            const list = document.getElementById("eventsList");
+            if (list) list.innerHTML = `<div class="event-row">${getTranslation("noEvents")}</div>`;
+            return;
+        }
+
+        const events = data.items;
         const list = document.getElementById("eventsList");
 
-if (!list) {
-    console.warn("eventsList não encontrado no HTML");
-    return;
-}
+        if (!list) {
+            console.warn("eventsList não encontrado no HTML");
+            return;
+        }
+
         list.innerHTML = "";
 
         if (!events || events.length === 0) {
@@ -103,7 +115,6 @@ if (!list) {
         }
 
         events.forEach((event, index) => {
-
             const date = new Date(event.start.dateTime || event.start.date);
 
             const formattedDate = date.toLocaleDateString(locale, {
@@ -121,30 +132,26 @@ if (!list) {
             if (index === 0) {
                 startCountdown(event.start.dateTime || event.start.date);
 
-               countdownHTML = `
-<div class="countdown-inline left">
-    <span id="days">00</span>d :
-    <span id="hours">00</span>h :
-    <span id="minutes">00</span>m :
-    <span id="seconds">00</span>s
-</div>
-`;
+                countdownHTML = `
+                <div class="countdown-inline left">
+                    <span id="days">00</span>d :
+                    <span id="hours">00</span>h :
+                    <span id="minutes">00</span>m :
+                    <span id="seconds">00</span>s
+                </div>
+                `;
             }
 
             list.innerHTML += `
             <div class="event-row">
-
                 <div class="event-date">${formattedDate}</div>
-
-               <div class="event-name">
-    ${countdownHTML}
-    <span class="event-title">${event.summary}</span>
-</div>
-
+                <div class="event-name">
+                    ${countdownHTML}
+                    <span class="event-title">${event.summary}</span>
+                </div>
                 <div class="event-location">
                     ${event.location || getTranslation("locationFallback")}
                 </div>
-
                 <div class="event-actions">
                     ${
                         ticketUrl
@@ -152,7 +159,6 @@ if (!list) {
                         : `<button class="btn-event disabled">${getTranslation("soon")}</button>`
                     }
                 </div>
-
             </div>
             `;
         });
@@ -168,13 +174,11 @@ if (!list) {
 let countdownInterval;
 
 function startCountdown(date) {
-
     if (countdownInterval) clearInterval(countdownInterval);
 
     const eventDate = new Date(date).getTime();
 
     countdownInterval = setInterval(() => {
-
         const now = new Date().getTime();
         const diff = eventDate - now;
 
@@ -188,10 +192,15 @@ function startCountdown(date) {
         const m = Math.floor((diff / 1000 / 60) % 60);
         const s = Math.floor((diff / 1000) % 60);
 
-        document.getElementById("days").innerText = String(d).padStart(2, "0");
-        document.getElementById("hours").innerText = String(h).padStart(2, "0");
-        document.getElementById("minutes").innerText = String(m).padStart(2, "0");
-        document.getElementById("seconds").innerText = String(s).padStart(2, "0");
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minutesEl = document.getElementById("minutes");
+        const secondsEl = document.getElementById("seconds");
+
+        if (daysEl) daysEl.innerText = String(d).padStart(2, "0");
+        if (hoursEl) hoursEl.innerText = String(h).padStart(2, "0");
+        if (minutesEl) minutesEl.innerText = String(m).padStart(2, "0");
+        if (secondsEl) secondsEl.innerText = String(s).padStart(2, "0");
 
     }, 1000);
 }

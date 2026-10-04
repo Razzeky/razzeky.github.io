@@ -1,0 +1,36 @@
+O JavaScript (JS) é a linguagem responsável por tornar um site interativo e dinâmico. Ele permite criar funcionalidades como animações, menus interativos, formulários inteligentes, botões com ações específicas e atualizações de conteúdo em tempo real sem precisar recarregar a página. Enquanto o HTML organiza a estrutura e o CSS cuida da aparência, o JavaScript adiciona comportamento e funcionalidade, tornando a navegação mais prática, moderna e envolvente para o usuário.
+
+
+
+
+
+
+
+function doGet(e) {
+  var folderId = '1euBFI-OIvVnFryYoSCMkHX4aa-GP41kh'; 
+  
+  var folder = DriveApp.getFolderById(folderId);
+  var files = folder.getFiles();
+  var imageUrls = [];
+  
+  while (files.hasNext()) {
+    var file = files.next();
+    var mimeType = file.getMimeType();
+    if (mimeType.indexOf('image/') === 0) {
+      imageUrls.push('https://lh3.googleusercontent.com/d/' + file.getId());
+    }
+  }
+  
+  return ContentService
+    .createTextOutput(JSON.stringify(imageUrls))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+
+Cole esse código lá no script.google.com e salve.
+
+Clique em Implantar > Nova implantação > Selecione o tipo App da Web (Execute como: Eu / Quem tem acesso: Qualquer um).
+
+Copie o link gerado (terminado em /exec).
+
+Cole esse link no seu script.js dentro da variável scriptURL

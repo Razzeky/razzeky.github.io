@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razzeky Music | Site Oficial</title>
+
+    <link rel="icon" type="image/png" href="imagem/logo.jpg">
+
+    <!-- Fonte Orbitron -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v31/y97py_asD_6SndSkfXzBjtF_V_Zf6N_K.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <script>
+        function translatePage(lang) {
+            window.currentLang = lang;
+
+            // 1. Traduz elementos com atributos data-pt/en/es (Bio, Menu, etc)
+            document.querySelectorAll("[data-pt]").forEach(element => {
+                if(lang === "pt") element.innerHTML = element.getAttribute("data-pt");
+                if(lang === "en") element.innerHTML = element.getAttribute("data-en");
+                if(lang === "es") element.innerHTML = element.getAttribute("data-es");
+            });
+
+            // 2. Aciona as traduções baseadas em ID do script.js
+            if (typeof changeLanguage === "function") {
+                changeLanguage(lang);
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="particles-js"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="#inicio" class="logo-link">
+        <img src="./imagem/LogoCentral.png" alt="RAZZEKY Logo" class="logo-img"> <br> <br>
+    </a>
+
+    <ul class="nav-links">
+        <li><a href="#inicio" data-pt="Minha trajetória" data-en="My Journey" data-es="Mi Trayectoria">Minha trajetória</a></li>
+        <li><a href="#contatos" data-pt="Contatos" data-en="Contacts" data-es="Contactos">Redes Sociais</a></li>
+        <li><a href="#streaming" data-pt="Músicas" data-en="Music" data-es="Música">Músicas</a></li>
+        <li><a href="#eventos" data-pt="Eventos" data-en="Events" data-es="Eventos">Eventos</a></li>
+    </ul>
+</nav>
+
+<!-- IDIOMA -->
+<div class="language-switcher">
+    <img src="https://flagcdn.com/w40/br.png" onclick="translatePage('pt')" alt="PT">
+    <img src="https://flagcdn.com/w40/us.png" onclick="translatePage('en')" alt="EN">
+    <img src="https://flagcdn.com/w40/es.png" onclick="translatePage('es')" alt="ES">
+</div>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
+    <div class="hero-content">
+
+        <div class="hero-text">
+            <div class="hero-logo-container">
+                <img src="./imagem/LogoCentral.png" class="hero-logo-large" alt="Logo Large">
+            </div>
+
+            <p class="bio-description"
+            data-pt="Desde 2014, o DJ Razzeky vem se consolidando como um nome de destaque na cena eletrônica de São Paulo, marcando presença em grandes eventos e nos principais clubes noturnos da cidade. Já se apresentou no Night Nation Run, o maior running music festival do mundo, realizado no Autódromo de Interlagos.<br><br>Ao longo de sua trajetória, passou por importantes casas como The Year, Abstratto Club, Via Marquês, Espaço Taal, The Sailor, Eu Tu Eles (Bar), Jim Roof Club, Club 33, Lucena Bar e Flag The Bar, além de marcar presença na renomada Festa do Chef.<br><br>Também é referência nos eventos mais insanos de drift, levando sua identidade sonora marcante e dividindo os decks com DJs de grande relevância no cenário nacional."
+            data-en="Since 2014, DJ Razzeky has been establishing himself as a standout name in São Paulo’s electronic music scene, performing at major events and top nightclubs.<br><br>He has performed at Night Nation Run, the world's largest running music festival, held at Interlagos Racetrack.<br><br>Throughout his career, he has played at venues such as Abstratto Club, Via Marquês, Espaço Taal, The Sailor, Eu Tu Eles, Jim Roof Club, Club 33, Lucena Bar and Flag The Bar.<br><br>He is also recognized in the drift scene, bringing his unique sound and sharing the stage with major national DJs."
+            data-es="Desde 2014, DJ Razzeky se ha consolidado como un nombre destacado en la escena electrónica de São Paulo, participando en grandes eventos y clubes nocturnos.<br><br>Ya se presentó en el Night Nation Run, el mayor festival de running music del mundo, realizado en el Autódromo de Interlagos.<br><br>A lo largo de su trayectoria, pasó por clubes como Abstratto Club, Via Marquês, Espaço Taal, The Sailor, Eu Tu Eles, Jim Roof Club, Club 33, Lucena Bar y Flag The Bar.<br><br>También es referencia en eventos de drift, compartiendo escenario con DJs importantes del país.">
+            Desde 2014, DJ Razzeky vem se consolidando como um nome de destaque na cena eletrônica de São Paulo, marcando presença em grandes eventos e nos principais clubes noturnos da cidade. <br>
+            Já se apresentou no ‘Night Nation Run’, o maior Running Music Festival do mundo, realizado no Autódromo de Interlagos. Ao longo de sua trajetória, passou por importantes clubes como Abstratto Club, Via Marquês, Espaço Taal, The Sailor, Eu Tu Eles (bar), Jim Roof Club, Club 33, Lucena Bar e Flag The Bar, além de presença na renomada Festa do Chefe.
+            <br>
+            Também é referência nos eventos de Drift, levando sua identidade sonora marcante e dividindo os decks com DJs de grande relevância no cenário nacional.
+            </p>
+        </div>
+
+
+
+<!-- 
+<div class="hero-gallery">
+            <div class="carousel-container">
+                O ID abaixo permite que o script preencha as fotos do Google Drive sozinho 
+
+                <div class="carousel-track" id="dynamicCarouselTrack">
+                   
+                </div>
+
+                <button class="carousel-btn prev">&#10094;</button>
+                <button class="carousel-btn next">&#10095;</button>
+            </div>
+        </div>
+-->
+                <div class="hero-gallery">
+            <div class="carousel-container">
+                <div class="carousel-track">
+                     <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1gbNeKB0KD6-M_6O-01tH_rkC4-I_qBVq" alt="Razzeky Photo1">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1yDTXkOaPVg33GoXLKkHheUHAoWWKSsAo" alt="Razzeky Photo2">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1op3JalwEieLqfNVlC7JbDAdu4l1QqSc_" alt="Razzeky Photo3">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/14klEEcnuUFbCllVvOPEmpw4E6FoMHKcr" alt="Razzeky Photo4">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1Dxs8PF3nzPoy5KC5Hp5QCnDqsXYEu85T" alt="Razzeky Photo5">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1H1mnmS8Tj615Y461mNxR937O_K3qBHyT" alt="Razzeky Photo6">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/16VLr7-P7ajr-B1-fZky-uTdlpSSnGc5B" alt="Razzeky Photo7">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1Fz2eZY8J5E0YcP2nM-LnMS9AuVThjtVk" alt="Razzeky Photo7">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/13zh_LEKZaN3DaOo5uitd3Zn9kHEdTgXp" alt="Razzeky Photo8">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1uscbfLtv6COAmaz7rbzEKA_YckMvBK9m" alt="Razzeky Photo9">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1hMQHrGaQEplfYvggmspv5o1UHUZNi8g4" alt="Razzeky Photo10">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1H1mnmS8Tj615Y461mNxR937O_K3qBHyT" alt="Razzeky Photo11">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1XekDay-lHSBrHUy2M5dVWizYS_KlU8pK" alt="Razzeky Photo12">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/1uhljOmXK-gmTK2DXgtqeFNxcjWjNwG-C" alt="Razzeky Photo13">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/13nENXtEcMggBOnWQosNZyiPkx6xacZAm" alt="Razzeky Photo14">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://lh3.googleusercontent.com/d/12zKHmxMMX1YlZIRbBSmE_5_F4CzGGHA2?hv2" alt="Razzeky Photo15">
+                    </div>
+                </div>
+
+                <button class="carousel-btn prev">&#10094;</button>
+                <button class="carousel-btn next">&#10095;</button>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+<!-- FOOTER / REDES SOCIAIS --> 
+<footer id="contatos"> 
+    <div class="footer-content">
+        <h2 data-pt="REDES SOCIAIS E CONTATOS" data-en="SOCIAL MEDIA & CONTACTS" data-es="REDES SOCIALES Y CONTACTOS" id="id-redes"> REDES SOCIAIS </h2> 
+        
+       <div class="social-grid">
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/djrazzeky" target="_blank" rel="noopener noreferrer" class="social-item">
+                <img src="https://cdn.simpleicons.org/instagram/fcf7f7" loading="lazy" decoding="async" alt="Instagram">
+                <span>Instagram</span>
+            </a>
+            <!-- TikTok -->
+            <a href="https://tiktok.com/@djrazzeky" target="_blank" rel="noopener noreferrer" class="social-item">
+                <img src="https://cdn.simpleicons.org/tiktok/fcf7f7" loading="lazy" decoding="async" alt="TikTok">
+                <span>TikTok</span>
+            </a>
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/djrazzeky/" target="_blank" rel="noopener noreferrer" class="social-item">
+                <img src="https://cdn.simpleicons.org/facebook/fcf7f7" loading="lazy" decoding="async" alt="Facebook">
+                <span>Facebook</span>
+            </a>
+            <!-- YouTube 
+            <a href="https://youtube.com/@djrazzeky" target="_blank" rel="noopener noreferrer" class="social-item">
+                <img src="https://cdn.simpleicons.org/youtube/fcf7f7" loading="lazy" decoding="async" alt="YouTube">
+                <span>YouTube</span> 
+            </a> -->
+        </div>
+    </div>
+    
+    <br><br><br>
+
+<!-- STREAMING (NOVA ESTRUTURA: Spotify/SoundCloud à esquerda e YouTube à direita) -->
+<section id="streaming" class="streaming-section">
+    <div class="section-header">
+        <h2
+        data-pt="playlist & Sets"
+        data-en="Playlist & Sets"
+        data-es="Playlist y Sets">
+        playlist & Sets
+        </h2>
+        <div class="divider"></div>
+    </div>
+
+    <div class="streaming-layout">
+        
+        <!-- COLUNA DA ESQUERDA: Spotify (em cima) e SoundCloud (embaixo) -->
+        <div class="streaming-column-left">
+            <!-- Spotify -->
+            <div class="player-card">
+                <h3 class="platform-title">Spotify</h3>
+                <iframe
+                    style="border-radius:12px"
+                    src="https://open.spotify.com/embed/playlist/6HmHu9iKvarTlQYciPDGOa?utm_source=generator&theme=0"
+                    width="100%"
+                    height="152"
+                    frameborder="0"
+                    allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+            </div>
+
+            <!-- Soundcloud -->
+            <div class="player-card">
+                <h3 class="platform-title">SOUNDCLOUD</h3>
+                <iframe
+                    width="100%"
+                    height="166"
+                    scrolling="no"
+                    frameborder="no"
+                    allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/djrazzeky&color=%231db954&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=false">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- COLUNA DA DIREITA: Vídeo do YouTube em Destaque -->
+        <div class="streaming-column-right">
+            <div class="player-card">
+                <h3 class="platform-title">YouTube</h3>
+                <iframe 
+                    width="100%" 
+                    height="360" 
+                    src="https://www.youtube.com/embed/SEU_VIDEO_ID" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- EVENTOS -->
+<section id="eventos" class="premium-events">
+    <div class="section-header">
+        <h2 id="id-eventos">PRÓXIMOS EVENTOS</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="events-list" id="eventsList"></div>
+</section>
+
+<section class="contact-section">
+    <div class="contact-grid">
+        <!-- CONTRATAÇÕES -->
+        <div class="contact-card">
+            <h3 id="id-contratacoes">CONTRATAÇÕES PARA SHOWS</h3>
+            <br><br>
+            <p>
+              <i class="fa-solid fa-phone contact-icon"></i>
+              +55 11 95409-6060
+            </p>
+        </div>
+        <br>
+
+        <!-- MARKETING -->
+        <div class="contact-card">
+            <h3 id="id-marketing">CAMPANHAS, MARKETING E PUBLICIDADE</h3>
+            <br><br>
+            <p>
+              <i class="fa-regular fa-envelope contact-icon"></i>
+              contato.razzeky@outlook.com
+            </p>
+        </div>
+    </div>
+</section>
+
+    <br><br>
+    <br>
+
+<div class="presskit-container">
+    <a href="https://drive.google.com/drive/folders/1kM15PVInDtGU1cuWi1yBDaMDvDJDSvQn" 
+       target="_blank" 
+       class="btn-neon-pink"
+       data-pt="PRESSKIT DJ RAZZEKY" 
+       data-en="DJ RAZZEKY PRESSKIT" 
+       data-es="PRESSKIT DJ RAZZEKY">
+        PRESSKIT DJ RAZZEKY
+    </a>
+</div>
+
+    <br><br><br>
+
+    <div class="footer-bottom">
+        <p>COPYRIGHT &copy; CRIADO POR JUAN MB  -  2026 DJ RAZZEKY TODOS OS DIREITOS DE IMAGENS RESERVADOS</p>
+    </div>
+</footer>
+
+<!-- Importação de Configurações Seguras e Scripts -->
+<script src="configs.js"></script>
+<script src="JS/script.js"></script>
+<script src="JS/eventos.js"></script>
+
+</body>
+</html>

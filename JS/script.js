@@ -89,18 +89,16 @@ document.querySelectorAll('.carousel-container').forEach(container => {
     startAutoSlide();
 });
 
-/* ========================================================================== */
-/* 👇 COLOQUE O SEU TRECHO DO GOOGLE DRIVE EXATAMENTE AQUI EMBAIXO 👇          */
-/* ========================================================================== 
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const track = document.getElementById("dynamicCarouselTrack");
     if (!track) return;
 
     // Cole aqui a URL que o Google Apps Script gerou para você
-    const scriptURL = 'SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwyAzkJPHKa79YvJg642S4oaeAjSmj-UQgvKcAdNnnD8bKn4AGQSyg9ksANsYttLJ9Olw/exec';
 
-    if (scriptURL && scriptURL !== 'SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI') {
+    if (scriptURL && scriptURL !== 'https://script.google.com/macros/s/AKfycbwyAzkJPHKa79YvJg642S4oaeAjSmj-UQgvKcAdNnnD8bKn4AGQSyg9ksANsYttLJ9Olw/exec') {
         fetch(scriptURL)
             .then(response => response.json())
             .then(imageUrls => {
@@ -125,7 +123,6 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error("Erro ao carregar fotos do Drive:", error));
     }
 });
-*/
 
 /**
  * =========================================

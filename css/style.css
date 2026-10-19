@@ -515,6 +515,7 @@ background-color: #111;
 padding: 40px;
 border-radius: 15px;
 display: flex;
+flex-direction: column;
 justify-content: center;
 align-items: center;
 text-align: center;
@@ -535,6 +536,7 @@ min-width: 80px;
 display: flex;
 justify-content: center;
 align-items: center;
+margin-bottom: 15px;
 }
 
 .presskit-icon img {
@@ -585,8 +587,6 @@ box-shadow: 0 0 15px #b3117d;
 
 @media (max-width: 600px) {
 .presskit-container {
-flex-direction: column;
-text-align: center;
 padding: 30px 20px;
 }
 }

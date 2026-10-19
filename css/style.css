@@ -890,6 +890,12 @@ animation: neonPulse 1s infinite alternate;
 /* ============================================================
 REDES SOCIAIS & CONTATOS
 ============================================================ */
+a {
+    color: inherit;            
+    text-decoration: none;     
+    font-family: inherit;     
+    font-size: inherit;        
+}
 
 .social-grid {
 display: flex;

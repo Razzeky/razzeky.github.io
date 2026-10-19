@@ -89,7 +89,7 @@ filter: drop-shadow(0 0 15px #ffffff) drop-shadow(0 0 35px rgba(255, 255, 255, 0
 .nav-links {
 display: flex;
 list-style: none;
-gap: 30px;
+gap: 41px;
 }
 
 .nav-links a {

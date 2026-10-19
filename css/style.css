@@ -1,8 +1,9 @@
 /* ============================================================
 CORES E VARIÁVEIS
 ============================================================ /
+/**/
 :root {
---bg-dark: #080808;      / Fundo ultra escuro /
+--bg-dark: #080808;       Fundo ultra escuro /
 --card-bg: #111111;      / Fundo dos cards /
 --accent: #5c53e7;       / Tom de destaque */
 --text-main: #ffffff;
@@ -316,6 +317,7 @@ align-items: center;
 }
 
 
+
 }
 
 /* RESPONSIVO CELULAR */
@@ -344,6 +346,7 @@ padding-top: 160px;
     height: 38px;
     font-size: 1.2rem;
 }
+
 
 
 }
@@ -457,6 +460,7 @@ flex-direction: column;
 }
 
 
+
 }
 
 /* ============================================================
@@ -505,6 +509,7 @@ display: none;
 }
 
 
+
 }
 
 /* ============================================================
@@ -515,7 +520,6 @@ background-color: #111;
 padding: 40px;
 border-radius: 15px;
 display: flex;
-flex-direction: column;
 justify-content: center;
 align-items: center;
 text-align: center;
@@ -536,7 +540,6 @@ min-width: 80px;
 display: flex;
 justify-content: center;
 align-items: center;
-margin-bottom: 15px;
 }
 
 .presskit-icon img {
@@ -587,6 +590,8 @@ box-shadow: 0 0 15px #b3117d;
 
 @media (max-width: 600px) {
 .presskit-container {
+flex-direction: column;
+text-align: center;
 padding: 30px 20px;
 }
 }

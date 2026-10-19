@@ -3,9 +3,9 @@ CORES E VARIÁVEIS
 ============================================================ /
 /**/
 :root {
---bg-dark: #080808;       Fundo ultra escuro /
---card-bg: #111111;      / Fundo dos cards /
---accent: #5c53e7;       / Tom de destaque */
+--bg-dark: #080808;       /* Fundo ultra escuro */
+--card-bg: #111111;      /* Fundo dos cards */
+--accent: #5c53e7;       /* Tom de destaque */
 --text-main: #ffffff;
 --text-dim: #888888;
 --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 2);

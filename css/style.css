@@ -1033,3 +1033,110 @@ transition: 0.3s;
 opacity: 1;
 transform: scale(1.1);
 }
+
+
+/* ============================================================
+CARROSSEL 3D YOUTUBE
+============================================================ */
+.yt-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    height: 360px; /* Mesma altura que você já usava */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px; /* Cria a profundidade 3D */
+    overflow: hidden;
+}
+
+.yt-carousel-inner {
+    position: relative;
+    width: 75%; /* Tamanho do vídeo em destaque no centro */
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.yt-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease, z-index 0.6s;
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none; /* Bloqueia cliques por padrão */
+}
+
+.yt-item iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: #000;
+}
+
+/* Camada que fica por cima dos vídeos inativos para podermos clicar nela e girar o carrossel */
+.yt-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    cursor: pointer;
+}
+
+/* VÍDEO CENTRAL (ATIVO) */
+.yt-item.active {
+    transform: translateX(0) scale(1) translateZ(0);
+    opacity: 1;
+    z-index: 3;
+    pointer-events: auto; /* Permite dar Play */
+}
+
+/* Remove a película invisível do vídeo central para que o play funcione */
+.yt-item.active .yt-overlay {
+    display: none;
+}
+
+/* VÍDEO DA ESQUERDA */
+.yt-item.left {
+    transform: translateX(-45%) scale(0.8) translateZ(-150px);
+    opacity: 0.5;
+    z-index: 2;
+    pointer-events: auto; /* Permite clicar para puxar ele pra frente */
+}
+
+/* VÍDEO DA DIREITA */
+.yt-item.right {
+    transform: translateX(45%) scale(0.8) translateZ(-150px);
+    opacity: 0.5;
+    z-index: 2;
+    pointer-events: auto; /* Permite clicar para puxar ele pra frente */
+}
+
+/* Botões laterais */
+.yt-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.15);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.yt-nav:hover {
+    background: rgba(179, 17, 125, 0.9);
+    box-shadow: 0 0 15px #ff00aa;
+    border-color: #ff00aa;
+}
+
+.prev-yt { left: 0px; }
+.next-yt { right: 0px; }

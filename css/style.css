@@ -1034,24 +1034,23 @@ opacity: 1;
 transform: scale(1.1);
 }
 
-
 /* ============================================================
-CARROSSEL 3D YOUTUBE
+CARROSSEL 3D YOUTUBE (ATUALIZADO PARA 3D REAL)
 ============================================================ */
 .yt-carousel-wrapper {
     position: relative;
     width: 100%;
-    height: 360px; /* Mesma altura que você já usava */
+    height: 360px;
     display: flex;
     align-items: center;
     justify-content: center;
-    perspective: 1000px; /* Cria a profundidade 3D */
-    overflow: hidden;
+    perspective: 1200px; /* Profundidade do 3D */
+    /* ATENÇÃO: Nunca adicione overflow: hidden aqui */
 }
 
 .yt-carousel-inner {
     position: relative;
-    width: 75%; /* Tamanho do vídeo em destaque no centro */
+    width: 55%; /* Espaço central ajustado para mostrar os itens laterais */
     height: 100%;
     transform-style: preserve-3d;
 }
@@ -1065,18 +1064,18 @@ CARROSSEL 3D YOUTUBE
     transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease, z-index 0.6s;
     opacity: 0;
     z-index: 0;
-    pointer-events: none; /* Bloqueia cliques por padrão */
+    pointer-events: none;
 }
 
 .yt-item iframe {
     width: 100%;
     height: 100%;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
     background: #000;
+    pointer-events: none; /* Bloqueia cliques nos vídeos traseiros */
 }
 
-/* Camada que fica por cima dos vídeos inativos para podermos clicar nela e girar o carrossel */
 .yt-overlay {
     position: absolute;
     inset: 0;
@@ -1084,36 +1083,44 @@ CARROSSEL 3D YOUTUBE
     cursor: pointer;
 }
 
-/* VÍDEO CENTRAL (ATIVO) */
+/* VÍDEO CENTRAL */
 .yt-item.active {
-    transform: translateX(0) scale(1) translateZ(0);
+    transform: translateX(0) scale(1) translateZ(50px) rotateY(0deg);
     opacity: 1;
-    z-index: 3;
-    pointer-events: auto; /* Permite dar Play */
+    z-index: 5;
+    pointer-events: auto;
 }
-
-/* Remove a película invisível do vídeo central para que o play funcione */
+.yt-item.active iframe {
+    pointer-events: auto; /* Libera o play do YouTube */
+}
 .yt-item.active .yt-overlay {
     display: none;
 }
 
 /* VÍDEO DA ESQUERDA */
 .yt-item.left {
-    transform: translateX(-45%) scale(0.8) translateZ(-150px);
-    opacity: 0.5;
-    z-index: 2;
-    pointer-events: auto; /* Permite clicar para puxar ele pra frente */
+    transform: translateX(-65%) scale(0.8) translateZ(-150px) rotateY(25deg);
+    opacity: 0.7;
+    z-index: 3;
+    pointer-events: auto;
 }
 
 /* VÍDEO DA DIREITA */
 .yt-item.right {
-    transform: translateX(45%) scale(0.8) translateZ(-150px);
-    opacity: 0.5;
-    z-index: 2;
-    pointer-events: auto; /* Permite clicar para puxar ele pra frente */
+    transform: translateX(65%) scale(0.8) translateZ(-150px) rotateY(-25deg);
+    opacity: 0.7;
+    z-index: 3;
+    pointer-events: auto;
 }
 
-/* Botões laterais */
+/* VÍDEOS NAS COSTAS DO CÍRCULO (Ocultos) */
+.yt-item.hidden {
+    transform: translateX(0) scale(0.6) translateZ(-400px) rotateY(0deg);
+    opacity: 0;
+    z-index: 1;
+}
+
+/* BOTÕES DE NAVEGAÇÃO */
 .yt-nav {
     position: absolute;
     top: 50%;
@@ -1121,8 +1128,8 @@ CARROSSEL 3D YOUTUBE
     background: rgba(0,0,0,0.6);
     color: #fff;
     border: 1px solid rgba(255,255,255,0.15);
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     z-index: 20;
@@ -1137,6 +1144,11 @@ CARROSSEL 3D YOUTUBE
     box-shadow: 0 0 15px #ff00aa;
     border-color: #ff00aa;
 }
+.prev-yt { left: -10px; }
+.next-yt { right: -10px; }
 
-.prev-yt { left: 0px; }
-.next-yt { right: 0px; }
+/* RESPONSIVIDADE DO 3D PARA CELULAR */
+@media (max-width: 900px) {
+    .yt-item.left { transform: translateX(-40%) scale(0.85) translateZ(-100px) rotateY(15deg); }
+    .yt-item.right { transform: translateX(40%) scale(0.85) translateZ(-100px) rotateY(-15deg); }
+}

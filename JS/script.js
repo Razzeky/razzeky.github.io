@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!track) return;
 
     const container = track.closest('.carousel-container');
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwyAzkJPHKa79YvJg642S4oaeAjSmj-UQgvKcAdNnnD8bKn4AGQSyg9ksANsYttLJ9Olw/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwQiJB_dFq65Je3voTtnepd5S1kEOTlz5jqS-O1YjT2RZzpKHlFLh3LFOS6MssPYwI-Ag/exec';
 
     // 1. Busca as imagens no Drive
     fetch(scriptURL)

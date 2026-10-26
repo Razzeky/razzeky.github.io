@@ -230,20 +230,44 @@
         </div>
 
         <!-- COLUNA DA DIREITA: Vídeo do YouTube em Destaque -->
-        <div class="streaming-column-right">
-            <div class="player-card">
-                <h3 class="platform-title">YouTube</h3>
-                <iframe 
-                    width="100%" 
-                    height="360" 
-                    src="https://www.youtube.com/live/EaIP5kq5Nj0?is=T9MGvwOoJOa4_aVB" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-                </iframe>
+       <div class="streaming-column-right">
+    <div class="player-card">
+        <h3 class="platform-title">YouTube</h3>
+        
+        <div class="yt-carousel-wrapper">
+            <div class="yt-carousel-inner" id="ytCarouselInner">
+                <!-- VÍDEO 1 -->
+                <div class="yt-item">
+                    <div class="yt-overlay"></div> <!-- Película invisível para clique -->
+                    <iframe src="https://www.youtube.com/embed/EaIP5kq5Nj0" title="YouTube video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                
+                <!-- VÍDEO 2 -->
+                <div class="yt-item">
+                    <div class="yt-overlay"></div>
+                    <iframe src="https://www.youtube.com/embed/J78aDIh2eM8" title="YouTube video 2" frameborder="0" allowfullscreen></iframe>
+                </div>
+                
+                <!-- VÍDEO 3 -->
+                <div class="yt-item">
+                    <div class="yt-overlay"></div>
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video 3" frameborder="0" allowfullscreen></iframe>
+                </div>
+                
+                <!-- VÍDEO 4 -->
+                <div class="yt-item">
+                    <div class="yt-overlay"></div>
+                    <iframe src="https://www.youtube.com/embed/kJQP7kiw5Fk" title="YouTube video 4" frameborder="0" allowfullscreen></iframe>
+                </div>
             </div>
+
+            <!-- Botões de navegação -->
+            <button class="yt-nav prev-yt" id="prevYt">&#10094;</button>
+            <button class="yt-nav next-yt" id="nextYt">&#10095;</button>
         </div>
+
+    </div>
+</div>
 
     </div>
 </section>

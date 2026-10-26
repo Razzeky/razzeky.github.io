@@ -220,3 +220,63 @@ document.addEventListener("DOMContentLoaded", () => {
         imageObserver.observe(img);
     });
 });
+
+
+/* === CARROSSEL 3D YOUTUBE === */
+document.addEventListener("DOMContentLoaded", () => {
+    const ytItems = document.querySelectorAll('.yt-item');
+    const prevYt = document.getElementById('prevYt');
+    const nextYt = document.getElementById('nextYt');
+
+    if(ytItems.length > 0) {
+        let currentYtIndex = 0;
+
+        function updateYtCarousel() {
+            ytItems.forEach((item, index) => {
+                // Remove todas as classes antigas
+                item.classList.remove('active', 'left', 'right', 'hidden');
+                
+                // Calcula as posições relativas circulares
+                if (index === currentYtIndex) {
+                    item.classList.add('active');
+                } else if (index === (currentYtIndex - 1 + ytItems.length) % ytItems.length) {
+                    item.classList.add('left');
+                } else if (index === (currentYtIndex + 1) % ytItems.length) {
+                    item.classList.add('right');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        // Girar para a direita
+        if(nextYt) {
+            nextYt.addEventListener('click', () => {
+                currentYtIndex = (currentYtIndex + 1) % ytItems.length;
+                updateYtCarousel();
+            });
+        }
+
+        // Girar para a esquerda
+        if(prevYt) {
+            prevYt.addEventListener('click', () => {
+                currentYtIndex = (currentYtIndex - 1 + ytItems.length) % ytItems.length;
+                updateYtCarousel();
+            });
+        }
+
+        // Clicar nos vídeos do fundo para trazê-los para frente
+        ytItems.forEach((item, index) => {
+            const overlay = item.querySelector('.yt-overlay');
+            if(overlay) {
+                overlay.addEventListener('click', () => {
+                    currentYtIndex = index;
+                    updateYtCarousel();
+                });
+            }
+        });
+
+        // Inicializa o visual
+        updateYtCarousel();
+    }
+});

@@ -1,3 +1,4 @@
+/* === NAVBAR SCROLL === */
 const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
     requestAnimationFrame(() => {
@@ -28,8 +29,49 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-/* === CARROSSEL === */
-document.querySelectorAll('.carousel-container').forEach(container => {
+/* === INTEGRAÇÃO GOOGLE DRIVE E CARROSSEL === */
+document.addEventListener("DOMContentLoaded", function() {
+    const track = document.getElementById("dynamicCarouselTrack");
+    if (!track) return;
+
+    const container = track.closest('.carousel-container');
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwyAzkJPHKa79YvJg642S4oaeAjSmj-UQgvKcAdNnnD8bKn4AGQSyg9ksANsYttLJ9Olw/exec';
+
+    // 1. Busca as imagens no Drive
+    fetch(scriptURL)
+        .then(response => response.json())
+        .then(imageUrls => {
+            if (imageUrls && imageUrls.length > 0) {
+                track.innerHTML = ""; // Limpa qualquer conteúdo estático
+                
+                // 2. Injeta as novas imagens
+                imageUrls.forEach((url, index) => {
+                    const slide = document.createElement("div");
+                    slide.className = "carousel-slide";
+                    if (index === 0) slide.classList.add("active");
+
+                    const img = document.createElement("img");
+                    img.src = url;
+                    img.alt = `Razzeky Photo ${index + 1}`;
+                    img.loading = "lazy";
+
+                    slide.appendChild(img);
+                    track.appendChild(slide);
+                });
+
+                // 3. Só inicializa o carrossel (botões, timer) AGORA que temos os slides
+                initCarousel(container);
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao carregar fotos do Drive:", error);
+            // Se der erro, tenta inicializar com o que tiver no HTML
+            initCarousel(container);
+        });
+});
+
+// Função que dá vida ao carrossel
+function initCarousel(container) {
     const track = container.querySelector('.carousel-track');
     const slides = container.querySelectorAll('.carousel-slide');
     const nextBtn = container.querySelector('.next');
@@ -82,47 +124,12 @@ document.querySelectorAll('.carousel-container').forEach(container => {
 
     container.addEventListener('mouseenter', stopAutoSlide);
     container.addEventListener('mouseleave', startAutoSlide);
-
     window.addEventListener('resize', updateCarousel);
 
+    // Ajusta a posição inicial e liga o timer
     updateCarousel();
     startAutoSlide();
-});
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    const track = document.getElementById("dynamicCarouselTrack");
-    if (!track) return;
-
-    // Cole aqui a URL que o Google Apps Script gerou para você
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwyAzkJPHKa79YvJg642S4oaeAjSmj-UQgvKcAdNnnD8bKn4AGQSyg9ksANsYttLJ9Olw/exec';
-
-    if (scriptURL && scriptURL !== 'https://script.google.com/macros/s/AKfycbwyAzkJPHKa79YvJg642S4oaeAjSmj-UQgvKcAdNnnD8bKn4AGQSyg9ksANsYttLJ9Olw/exec') {
-        fetch(scriptURL)
-            .then(response => response.json())
-            .then(imageUrls => {
-                if (imageUrls && imageUrls.length > 0) {
-                    track.innerHTML = ""; // Limpa qualquer conteúdo estático
-                    
-                    imageUrls.forEach((url, index) => {
-                        const slide = document.createElement("div");
-                        slide.className = "carousel-slide";
-                        if (index === 0) slide.classList.add("active");
-
-                        const img = document.createElement("img");
-                        img.src = url;
-                        img.alt = `Razzeky Photo ${index + 1}`;
-                        img.loading = "lazy";
-
-                        slide.appendChild(img);
-                        track.appendChild(slide);
-                    });
-                }
-            })
-            .catch(error => console.error("Erro ao carregar fotos do Drive:", error));
-    }
-});
+}
 
 /**
  * =========================================

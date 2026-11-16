@@ -2,9 +2,9 @@
 CORES E VARIÁVEIS
 ============================================================ */
 :root {
-  --bg-dark: #080808;       /* Fundo ultra escuro */
-  --card-bg: #111111;       /* Fundo dos cards */
-  --accent: #5c53e7;        /* Tom de destaque */
+  --bg-dark: #080808;        /* Fundo ultra escuro */
+  --card-bg: #111111;        /* Fundo dos cards */
+  --accent: #5c53e7;         /* Tom de destaque */
   --text-main: #ffffff;
   --text-dim: #888888;
   --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 2);
@@ -267,7 +267,7 @@ html, body {
   display: flex;
   width: 100%;
   height: 100%;
-  transition: transform 0.9s ease;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
   will-change: transform;
 }
 
@@ -292,6 +292,7 @@ html, body {
   display: block;
   object-fit: cover;
   background-color: #000;
+  content-visibility: auto;
 }
 
 /* BOTÕES DE PASSAR PARA O LADO */
@@ -385,13 +386,6 @@ html, body {
   justify-content: space-between;
 }
 
-.streaming-column-right iframe {
-  width: 100%;
-  flex-grow: 1;
-  min-height: 360px;
-  border-radius: 12px;
-}
-
 .player-card {
   background: var(--card-bg);
   padding: 25px;
@@ -417,116 +411,27 @@ html, body {
 }
 
 /* ============================================================
-5. CARROSSEL 3D YOUTUBE
+5. VÍDEO ÚNICO DO YOUTUBE (ATUALIZADO)
 ============================================================ */
-.yt-carousel-wrapper {
+.yt-single-wrapper {
   position: relative;
   width: 100%;
-  height: 360px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1200px;
-}
-
-.yt-carousel-inner {
-  position: relative;
-  width: 55%;
   height: 100%;
-  transform-style: preserve-3d;
-}
-
-.yt-item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease, z-index 0.6s;
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.yt-item iframe {
-  width: 100%;
-  height: 100%;
+  min-height: 360px;
+  flex-grow: 1;
   border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+  overflow: hidden;
   background: #000;
-  pointer-events: none;
 }
 
-.yt-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  cursor: pointer;
+.yt-single-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  border-radius: 12px;
+  border: none;
+  display: block;
 }
-
-/* VÍDEO CENTRAL */
-.yt-item.active {
-  transform: translateX(0) scale(1) translateZ(50px) rotateY(0deg);
-  opacity: 1;
-  z-index: 5;
-  pointer-events: auto;
-}
-.yt-item.active iframe {
-  pointer-events: auto;
-}
-.yt-item.active .yt-overlay {
-  display: none;
-}
-
-/* VÍDEO DA ESQUERDA */
-.yt-item.left {
-  transform: translateX(-65%) scale(0.8) translateZ(-150px) rotateY(25deg);
-  opacity: 0.7;
-  z-index: 3;
-  pointer-events: auto;
-}
-
-/* VÍDEO DA DIREITA */
-.yt-item.right {
-  transform: translateX(65%) scale(0.8) translateZ(-150px) rotateY(-25deg);
-  opacity: 0.7;
-  z-index: 3;
-  pointer-events: auto;
-}
-
-/* VÍDEOS NAS COSTAS DO CÍRCULO */
-.yt-item.hidden {
-  transform: translateX(0) scale(0.6) translateZ(-400px) rotateY(0deg);
-  opacity: 0;
-  z-index: 1;
-}
-
-/* BOTÕES DE NAVEGAÇÃO */
-.yt-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.15);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-}
-
-.yt-nav:hover {
-  background: rgba(179, 17, 125, 0.9);
-  box-shadow: 0 0 15px #ff00aa;
-  border-color: #ff00aa;
-}
-.prev-yt { left: -10px; }
-.next-yt { right: -10px; }
 
 /* ============================================================
 6. EVENTOS AUTOMÁTICOS PREMIUM E BANDSINTOWN
@@ -864,10 +769,10 @@ html, body {
 8. REDES SOCIAIS & CONTATOS (FOOTER / FINAL)
 ============================================================ */
 a {
-  color: inherit;          
+  color: inherit;         
   text-decoration: none;     
   font-family: inherit;     
-  font-size: inherit;        
+  font-size: inherit;         
 }
 
 .social-grid {
@@ -1047,12 +952,6 @@ footer {
   .streaming-column-right iframe {
     min-height: 280px;
   }
-
-  .yt-carousel-inner {
-    width: 80%;
-  }
-  .yt-item.left { transform: translateX(-40%) scale(0.85) translateZ(-100px) rotateY(15deg); }
-  .yt-item.right { transform: translateX(40%) scale(0.85) translateZ(-100px) rotateY(-15deg); }
 }
 
 @media (max-width: 768px) {
